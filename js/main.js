@@ -106,9 +106,9 @@
 	var pieChart = function() {
 		$('.chart').easyPieChart({
 			scaleColor: false,
-			lineWidth: 4,
+			lineWidth: 6,
 			lineCap: 'butt',
-			barColor: '#FF9000',
+			barColor: '#9C9C9C',
 			trackColor:	"#f5f5f5",
 			size: 160,
 			animate: 1000
