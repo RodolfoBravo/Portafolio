@@ -2502,11 +2502,11 @@ select.mobile-device {
 	margin-top:12px;
 }
 .pricing-table > .header > .price > .amount{
-	font-weight:bold;
+	font-weight:ligh;
 	font-size:80px;
 }
 .pricing-table > .header > .price > .period{
-	text-transform:uppercase;
+	
 	letter-spacing:2px;
 	font-size:12px;
 }
