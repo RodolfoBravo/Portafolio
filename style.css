@@ -2490,37 +2490,37 @@ select.mobile-device {
 	-ms-transform:rotate(45deg);
 	-o-transform:rotate(45deg);
 	transform:rotate(45deg);
-	border:solid 1px #B7A389;
+	border:solid 1px #000000;
 	-webkit-transition:all .3s ease-in-out;
 	-moz-transition:all .3s ease-in-out;
 	transition:all .3s ease-in-out;
-	color:#B7A389;
+	color:#000000;
 }
 .process:hover > .number{
 	color:#FFF;
-	background:#B7A389;
+	background:#1F618D;
 }
 .process > .number > span{
 	transform:rotate(-45deg);
 	display:block;
-	height:28px;
-	width:28px;
-	line-height:28px;
+	height:40px;
+	width:40px;
+	line-height:40px;
 	text-align:center;
 	position:relative;
 }
 .process > .number > span:before{
 	content: ' ';
-	border-top:solid 8px transparent;
-	border-bottom:solid 8px transparent;
-	border-left:solid 8px #000000;
+	border-top:solid 10px transparent;
+	border-bottom:solid 10px transparent;
+	border-left:solid 10px #000000;
 	position:absolute;
 	top:50%;
-	margin-top:-8px;
-	right:-43px;
+	margin-top:-10px;
+	right:-45px;
 }
 .process.last > .number > span:before{
-	border:solid 4px #b18449;
+	border:solid 5px #1F618D;
 	margin-top:-4px;
 }
 .process > .number > span:after{
