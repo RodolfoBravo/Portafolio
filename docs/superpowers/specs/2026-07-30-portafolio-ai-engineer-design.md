@@ -58,6 +58,26 @@ acoplados a la plantilla, y los efectos de motion deseados son más simples y m�
 | Stack técnico | HTML + CSS moderno + JS vanilla | Sin build, sin dependencias, despliegue directo en GitHub Pages |
 | Formulario | Formspree | Funciona en hosting estático |
 | Contenido de proyectos | 6 arquetipos redactados, métricas como marcadores | Rodolfo sustituye con datos reales que pueda defender |
+| Posicionamiento | **AI Engineer con base fullstack** | Ver 3.1 |
+
+### 3.1 Posicionamiento: AI Engineer con base fullstack
+
+El título que lidera es **AI Engineer**, pero el fullstack no se elimina: se subordina y se
+convierte en el argumento diferenciador. Tres razones:
+
+1. **Aritmética de credibilidad.** La IA generativa lleva alrededor de tres años en adopción
+   empresarial real. Nadie tiene siete años de experiencia en LLMs. Un kicker que diga
+   «AI Engineer · 7 años en producción» se lee como perfil inflado y cuesta credibilidad en el
+   primer segundo. La cronología va explícita: **7 años construyendo software, [XX] en sistemas
+   de IA.**
+2. **Volumen de vacantes.** Hay más ofertas de fullstack/frontend senior que de AI Engineer. Un
+   portafolio sin ninguna señal fullstack sale de esos filtros y reduce el embudo justo cuando
+   conviene ampliarlo. Los términos fullstack se conservan en el JSON-LD y en las keywords.
+3. **Es el argumento más fuerte que tiene.** Muchas vacantes de «AI Engineer» piden ML profundo
+   (entrenamiento, fine-tuning, MLOps de modelos propios). El perfil de Rodolfo es distinto y
+   más demandado: sabe construir el producto completo alrededor del modelo. El mensaje del sitio
+   debe ser explícitamente *«no solo conecto una API, entrego el sistema completo»* — eso es lo
+   que separa a un AI Engineer contratable de alguien con demos.
 
 ### Nota explícita sobre el contenido de los proyectos
 
@@ -252,7 +272,13 @@ verificado en cada par de colores; navegación completa por teclado; `<meta view
 
 `<title>` y `<meta description>` reales; Open Graph y Twitter Card con `og:image` de 1200×630;
 JSON-LD de tipo `Person` con `jobTitle: "AI Engineer"` y `knowsAbout` poblado con los términos
-que buscan los recruiters (RAG, LLM, Next.js, AWS, Angular, Stripe); `canonical`.
+que buscan los recruiters; `canonical`.
+
+`knowsAbout` debe incluir **también** los términos fullstack, para no salir de esos filtros de
+búsqueda (ver 3.1): `AI Engineering`, `Large Language Models`, `RAG`, `Prompt Engineering`,
+`LLMOps`, `Full-Stack Development`, `Next.js`, `Angular`, `React`, `TypeScript`, `Python`,
+`Node.js`, `AWS`, `Google Cloud`, `Azure`, `Stripe`, `PostgreSQL`. Y `alternateName` con
+`"Full-Stack Engineer"` junto a `"AI Engineer"`.
 
 ### Rendimiento
 
@@ -267,17 +293,21 @@ Fuentes con `preconnect` + `display=swap`. Imágenes con `width`/`height` explí
 ### 8.1 Hero
 
 **ES**
-- Kicker: `AI ENGINEER · 7 AÑOS EN PRODUCCIÓN · REMOTO`
+- Kicker: `AI ENGINEER · 7 AÑOS CONSTRUYENDO SOFTWARE · [XX] EN SISTEMAS DE IA`
 - H1: `Construyo IA que sobrevive a producción.` (la palabra *sobrevive* en acento)
-- Párrafo: `Siete años desarrollando software, los últimos [X] enfocados en sistemas con LLMs: RAG, agentes con herramientas y evaluación continua. No demos — sistemas con usuarios reales, costos bajo control y observabilidad.`
+- Párrafo: `Siete años desarrollando software, los últimos [XX] enfocados en sistemas con LLMs: RAG, agentes con herramientas y evaluación continua. No demos — sistemas con usuarios reales, costos bajo control y observabilidad.`
+- **Línea end-to-end** (el diferenciador, en mono bajo el párrafo): `Del retrieval al checkout: diseño el sistema completo, no solo la llamada al modelo.`
 - CTAs: `Ver casos de estudio` · `Descargar CV` · `Escríbeme`
 - Rol rotando (scramble): `AI Engineer` / `LLM Systems Engineer` / `AI Solutions Architect`
 
 **EN**
-- Kicker: `AI ENGINEER · 7 YEARS SHIPPING · REMOTE`
+- Kicker: `AI ENGINEER · 7 YEARS BUILDING SOFTWARE · [XX] IN AI SYSTEMS`
 - H1: `I build AI that survives production.`
-- Párrafo: `Seven years building software, the last [X] focused on LLM systems: RAG, tool-using agents, and continuous evaluation. Not demos — systems with real users, costs under control, and observability.`
+- Párrafo: `Seven years building software, the last [XX] focused on LLM systems: RAG, tool-using agents, and continuous evaluation. Not demos — systems with real users, costs under control, and observability.`
+- **Línea end-to-end:** `From retrieval to checkout: I design the whole system, not just the model call.`
 - CTAs: `View case studies` · `Download CV` · `Get in touch`
+
+La cronología del kicker es obligatoria y no debe simplificarse a «7 años» sin más: ver 3.1.
 
 Badge de disponibilidad: `Disponible para proyectos` / `Available for work`, con punto verde.
 
