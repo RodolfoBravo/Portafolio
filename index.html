@@ -147,6 +147,17 @@
 
   <footer id="footer"><!-- Task 11 --></footer>
 
+  <div class="modal" id="modal" hidden>
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" type="button" id="modalClose"
+              data-i18n-attr="aria-label:a11y.closeModal">
+        <span aria-hidden="true">✕</span>
+      </button>
+      <div class="modal__body" id="modalBody"></div>
+    </div>
+  </div>
+
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>

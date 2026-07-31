@@ -381,6 +381,111 @@
     for (var k = 0; k < nodes.length; k++) obs.observe(nodes[k]);
   }
 
+  // ---------- Modal ----------
+  var modalEl, modalBody, lastFocused = null;
+  var FOCUSABLE = 'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+  function findCase(id) {
+    var data = win.CaseStudies || [];
+    for (var i = 0; i < data.length; i++) if (data[i].id === id) return data[i];
+    return null;
+  }
+
+  function buildModalHtml(c, lang) {
+    var loc = c[lang] || c.en;
+    var t = function (k) { return win.I18n.t(lang, k); };
+    var catLabel = t('work.filter' + c.category.charAt(0).toUpperCase() + c.category.slice(1));
+
+    var arch = '';
+    for (var i = 0; i < c.architecture.length; i++) {
+      if (i) arch += '<span class="modal__archArrow" aria-hidden="true">→</span>';
+      arch += '<span class="modal__archStep">' + c.architecture[i] + '</span>';
+    }
+
+    var chips = '';
+    for (var j = 0; j < c.stack.length; j++) chips += '<span class="card__chip">' + c.stack[j] + '</span>';
+
+    var impact = '';
+    for (var k = 0; k < loc.impact.length; k++) impact += '<li>' + loc.impact[k] + '</li>';
+
+    return '<span class="mono modal__cat">' + catLabel + '</span>'
+      + '<h3 class="modal__title" id="modalTitle">' + loc.title + '</h3>'
+      + '<p class="modal__tagline">' + loc.tagline + '</p>'
+      + '<div class="modal__block"><span class="mono modal__label">' + t('work.labelProblem') + '</span>'
+      + '<p>' + loc.problem + '</p></div>'
+      + '<div class="modal__block"><span class="mono modal__label">' + t('work.labelSolution') + '</span>'
+      + '<p>' + loc.solution + '</p></div>'
+      + '<div class="modal__block"><span class="mono modal__label">' + t('work.labelArchitecture') + '</span>'
+      + '<div class="modal__arch">' + arch + '</div></div>'
+      + '<div class="modal__block"><span class="mono modal__label">' + t('work.labelStack') + '</span>'
+      + '<div class="modal__chips">' + chips + '</div></div>'
+      + '<div class="modal__block"><span class="mono modal__label">' + t('work.labelImpact') + '</span>'
+      + '<ul class="modal__impact">' + impact + '</ul></div>'
+      + '<div class="modal__block"><span class="mono modal__label">' + t('work.labelLearned') + '</span>'
+      + '<p>' + loc.learned + '</p></div>';
+  }
+
+  function openCase(id) {
+    var c = findCase(id);
+    if (!c || !modalEl) return;
+
+    lastFocused = getCardById(id);
+    modalBody.innerHTML = buildModalHtml(c, state.lang);
+    modalEl.removeAttribute('hidden');
+    modalEl.setAttribute('data-case', id);
+    doc.body.setAttribute('data-modal-open', 'true');
+    doc.getElementById('modalClose').focus();
+  }
+
+  function closeCase() {
+    if (!modalEl || modalEl.hasAttribute('hidden')) return;
+    modalEl.setAttribute('hidden', '');
+    modalEl.removeAttribute('data-case');
+    doc.body.removeAttribute('data-modal-open');
+    if (lastFocused) {
+      var btn = lastFocused.querySelector('[data-open]');
+      (btn || lastFocused).focus();
+    }
+  }
+
+  function trapFocus(e) {
+    if (modalEl.hasAttribute('hidden') || e.key !== 'Tab') return;
+    var nodes = modalEl.querySelectorAll(FOCUSABLE);
+    if (!nodes.length) return;
+    var first = nodes[0], last = nodes[nodes.length - 1];
+    if (e.shiftKey && doc.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && doc.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function initModal() {
+    modalEl = doc.getElementById('modal');
+    modalBody = doc.getElementById('modalBody');
+    if (!modalEl) return;
+
+    doc.addEventListener('click', function (e) {
+      var opener = e.target.closest('[data-open]');
+      if (opener) { openCase(opener.getAttribute('data-open')); return; }
+      var card = e.target.closest('#workGrid .card');
+      if (card) { openCase(card.getAttribute('data-id')); }
+    });
+
+    doc.getElementById('modalClose').addEventListener('click', closeCase);
+    doc.getElementById('modalBackdrop').addEventListener('click', closeCase);
+
+    doc.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeCase();
+      trapFocus(e);
+    });
+
+    // Al cambiar idioma con el modal abierto, se reconstruye en el nuevo idioma.
+    onLangChange(function (lang) {
+      var openId = modalEl.getAttribute('data-case');
+      if (!openId) return;
+      var c = findCase(openId);
+      if (c) modalBody.innerHTML = buildModalHtml(c, lang);
+    });
+  }
+
   /* ---------- Arranque ---------- */
 
   ready(function () {
@@ -391,6 +496,7 @@
     initScramble();
     initCounters();
     initFilters();
+    initModal();
   });
 
   /* ---------- API pública ---------- */
@@ -404,6 +510,8 @@
     observeReveal: observeReveal,
     splitWords: splitWords,
     getCardById: getCardById,
-    renderCards: renderCards
+    renderCards: renderCards,
+    openCase: openCase,
+    closeCase: closeCase
   };
 });

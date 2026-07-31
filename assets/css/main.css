@@ -360,3 +360,51 @@ p { color: var(--muted); max-width: var(--measure); }
 @media (prefers-reduced-motion: no-preference) {
   .skip-link { transition: top .2s var(--ease); }
 }
+
+/* ---------- 6. Modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: var(--sp-4); }
+.modal[hidden] { display: none; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(5, 5, 6, .82); backdrop-filter: blur(6px); }
+
+.modal__panel {
+  position: relative; z-index: 1;
+  width: min(760px, 100%); max-height: 88vh; overflow-y: auto;
+  background: var(--raised); border: 1px solid var(--hairline); border-radius: var(--radius);
+  padding: clamp(var(--sp-6), 4vw, var(--sp-8));
+}
+.modal__close {
+  position: sticky; top: 0; float: right; margin: calc(var(--sp-4) * -1) calc(var(--sp-4) * -1) 0 0;
+  width: 38px; height: 38px; border: 1px solid var(--hairline); border-radius: 50%;
+  color: var(--muted); display: grid; place-items: center;
+}
+.modal__close:hover { color: var(--text); border-color: var(--text); }
+
+.modal__cat { color: var(--accent); }
+.modal__title { margin: var(--sp-3) 0 var(--sp-2); font-size: var(--fs-h2); }
+.modal__tagline { color: var(--muted); }
+
+.modal__block { margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--hairline); }
+.modal__label { display: block; color: var(--faint); margin-bottom: var(--sp-3); }
+.modal__block p { color: var(--muted); }
+
+.modal__arch { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.modal__archStep {
+  font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: .1em;
+  padding: 7px 11px; border: 1px solid var(--hairline); border-radius: 4px; color: var(--text);
+}
+.modal__archArrow { color: var(--accent); font-size: .75rem; }
+
+.modal__chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.modal__impact { display: grid; gap: var(--sp-3); }
+.modal__impact li { display: flex; gap: var(--sp-3); align-items: baseline; color: var(--text); }
+.modal__impact li::before { content: "→"; color: var(--accent); flex: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .modal__close { transition: color .2s var(--ease), border-color .2s var(--ease); }
+  .modal__backdrop { animation: fadeIn .24s var(--ease); }
+  .modal__panel { animation: panelIn .24s var(--ease); }
+  @keyframes fadeIn { from { opacity: 0; } }
+  @keyframes panelIn { from { opacity: 0; transform: scale(.98); } }
+}
+
+body[data-modal-open="true"] { overflow: hidden; }
