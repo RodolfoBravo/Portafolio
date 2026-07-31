@@ -286,6 +286,65 @@ p { color: var(--muted); max-width: var(--measure); }
 }
 .proof__label { color: var(--muted); max-width: 22ch; line-height: 1.7; }
 
+/* ---------- 6. Work ---------- */
+.work__filters { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-7); }
+.work__filter {
+  font-family: var(--font-mono); font-size: var(--fs-mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: 9px 14px; border: 1px solid var(--hairline); border-radius: 999px;
+  color: var(--faint);
+}
+.work__filter:hover { color: var(--text); border-color: var(--text); }
+.work__filter[aria-pressed="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+
+.work__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+
+.card {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: var(--sp-4);
+  padding: var(--sp-6); text-align: left; width: 100%;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
+}
+.card:hover { border-color: rgba(244, 241, 234, .28); background: var(--raised); }
+.card[hidden] { display: none; }
+
+.card::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(340px circle at var(--px, 50%) var(--py, 50%), rgba(200, 255, 0, .07), transparent 70%);
+}
+
+.card__top { display: flex; align-items: center; gap: var(--sp-3); }
+.card__cat { color: var(--accent); }
+.card__lock { margin-left: auto; color: var(--faint); }
+.card__title { font-size: var(--fs-h3); }
+.card__tagline { color: var(--muted); font-size: var(--fs-small); }
+.card__stack { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: auto; padding-top: var(--sp-2); }
+.card__chip {
+  font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: .1em;
+  padding: 5px 9px; border: 1px solid var(--hairline); border-radius: 4px; color: var(--faint);
+}
+.card__more { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-small); color: var(--accent); }
+
+/* Bajo `reduce`, la carta debe permanecer visible, sin tilt ni halo: por eso el
+   spotlight (::before en hover) y el tilt (transform) sólo se activan aquí dentro,
+   junto con todas las transiciones/animaciones de esta sección. */
+@media (prefers-reduced-motion: no-preference) {
+  .work__filter { transition: color .2s var(--ease), border-color .2s var(--ease); }
+
+  .card:hover::before { opacity: 1; }
+  .card::before { transition: opacity .25s var(--ease); }
+
+  .card:hover .card__more span:last-child { transform: translateX(4px); }
+  .card__more span:last-child { transition: transform .2s var(--ease); }
+
+  .work__grid { perspective: 1000px; }
+  .card {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    transition: border-color .25s var(--ease), background-color .25s var(--ease), transform .18s var(--ease);
+  }
+}
+
 /* ---------- 8. Utilidades ---------- */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0;

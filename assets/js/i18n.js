@@ -12,6 +12,7 @@
       'a11y.menu': 'Abrir menú de navegación',
       'a11y.closeModal': 'Cerrar detalle del proyecto',
       'a11y.metrics': 'Métricas',
+      'a11y.filters': 'Filtros',
 
       'nav.landmark': 'Principal',
       'nav.work': 'Casos',
@@ -111,6 +112,7 @@
       'a11y.menu': 'Open navigation menu',
       'a11y.closeModal': 'Close project detail',
       'a11y.metrics': 'Metrics',
+      'a11y.filters': 'Filters',
 
       'nav.landmark': 'Main',
       'nav.work': 'Work',

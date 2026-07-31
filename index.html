@@ -117,7 +117,27 @@
         </div>
       </div>
     </section>
-    <section id="work" class="section"><!-- Task 6 --></section>
+    <section class="section work" id="work">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="kicker" data-i18n="work.kicker">Casos de estudio</span>
+          <h2 data-reveal-words><span data-i18n="work.title">Sistemas con LLMs que llegaron a usuarios reales.</span></h2>
+          <p data-i18n="work.lede"></p>
+        </div>
+
+        <div class="work__filters" id="workFilters" role="group" aria-label="Filtros" data-i18n-attr="aria-label:a11y.filters">
+          <button type="button" class="work__filter" data-filter="all" aria-pressed="true" data-i18n="work.filterAll">Todos</button>
+          <button type="button" class="work__filter" data-filter="rag" aria-pressed="false" data-i18n="work.filterRag">RAG</button>
+          <button type="button" class="work__filter" data-filter="agents" aria-pressed="false" data-i18n="work.filterAgents">Agentes</button>
+          <button type="button" class="work__filter" data-filter="llmops" aria-pressed="false" data-i18n="work.filterLlmops">LLMOps</button>
+          <button type="button" class="work__filter" data-filter="product" aria-pressed="false" data-i18n="work.filterProduct">Producto</button>
+          <button type="button" class="work__filter" data-filter="documents" aria-pressed="false" data-i18n="work.filterDocuments">Documentos</button>
+          <button type="button" class="work__filter" data-filter="integrations" aria-pressed="false" data-i18n="work.filterIntegrations">Integraciones</button>
+        </div>
+
+        <div class="work__grid" id="workGrid"></div>
+      </div>
+    </section>
     <section id="stack" class="section"><!-- Task 8 --></section>
     <section id="production" class="section"><!-- Task 9 --></section>
     <section id="experience" class="section"><!-- Task 10 --></section>

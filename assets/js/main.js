@@ -110,6 +110,110 @@
     else doc.addEventListener('DOMContentLoaded', fn);
   }
 
+  // ---------- Case studies ----------
+  var cardsById = {};
+
+  function chip(text) { return '<span class="card__chip">' + text + '</span>'; }
+
+  function renderCards(lang) {
+    var grid = doc.getElementById('workGrid');
+    if (!grid || !win.CaseStudies) return;
+    var data = win.CaseStudies;
+    var html = '';
+
+    for (var i = 0; i < data.length; i++) {
+      var c = data[i];
+      var loc = c[lang] || c.en;
+      var catLabel = win.I18n.t(lang, 'work.filter' +
+        c.category.charAt(0).toUpperCase() + c.category.slice(1));
+
+      html += '<article class="card" data-reveal data-category="' + c.category + '" data-id="' + c.id + '">'
+        + '<div class="card__top">'
+        + '<span class="mono card__cat">' + catLabel + '</span>'
+        + (c.link ? '' : '<span class="mono card__lock">' + win.I18n.t(lang, 'work.private') + '</span>')
+        + '</div>'
+        + '<h3 class="card__title">' + loc.title + '</h3>'
+        + '<p class="card__tagline">' + loc.tagline + '</p>'
+        + '<div class="card__stack">' + c.stack.slice(0, 4).map(chip).join('') + '</div>'
+        + '<button class="card__more" type="button" data-open="' + c.id + '">'
+        + '<span>' + win.I18n.t(lang, 'work.readMore') + '</span><span aria-hidden="true">→</span>'
+        + '</button>'
+        + '</article>';
+    }
+
+    grid.innerHTML = html;
+
+    cardsById = {};
+    var cards = grid.querySelectorAll('.card');
+    for (var j = 0; j < cards.length; j++) {
+      cardsById[cards[j].getAttribute('data-id')] = cards[j];
+      if (reduceMotion) cards[j].setAttribute('data-revealed', 'true');
+    }
+    if (!reduceMotion) observeReveal('#workGrid .card');
+    attachTilt();
+  }
+
+  function getCardById(id) { return cardsById[id] || null; }
+
+  function initFilters() {
+    var bar = doc.getElementById('workFilters');
+    var grid = doc.getElementById('workGrid');
+    if (!bar || !grid) return;
+
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('.work__filter');
+      if (!btn) return;
+      var filter = btn.getAttribute('data-filter');
+
+      var all = bar.querySelectorAll('.work__filter');
+      for (var i = 0; i < all.length; i++) {
+        all[i].setAttribute('aria-pressed', String(all[i] === btn));
+      }
+
+      var cards = grid.querySelectorAll('.card');
+      for (var j = 0; j < cards.length; j++) {
+        var show = filter === 'all' || cards[j].getAttribute('data-category') === filter;
+        if (show) cards[j].removeAttribute('hidden');
+        else cards[j].setAttribute('hidden', '');
+      }
+    });
+  }
+
+  function attachTilt() {
+    if (reduceMotion) return;
+    var cards = doc.querySelectorAll('#workGrid .card');
+    for (var i = 0; i < cards.length; i++) bindTilt(cards[i]);
+  }
+
+  function bindTilt(card) {
+    var MAX = 6;
+    var pending = false, px = 0, py = 0, rx = 0, ry = 0;
+
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      px = e.clientX - r.left;
+      py = e.clientY - r.top;
+      ry = ((px / r.width) - .5) * 2 * MAX;
+      rx = -((py / r.height) - .5) * 2 * MAX;
+      if (pending) return;
+      pending = true;
+      win.requestAnimationFrame(function () {
+        card.style.setProperty('--px', px + 'px');
+        card.style.setProperty('--py', py + 'px');
+        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        pending = false;
+      });
+    }, { passive: true });
+
+    card.addEventListener('pointerleave', function () {
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  }
+
+  onLangChange(function (lang) { renderCards(lang); });
+
   // ---------- Motor de reveal ----------
   var revealObserver = null;
 
@@ -286,6 +390,7 @@
     initAurora();
     initScramble();
     initCounters();
+    initFilters();
   });
 
   /* ---------- API pública ---------- */
@@ -297,6 +402,8 @@
     onLangChange: onLangChange,
     ready: ready,
     observeReveal: observeReveal,
-    splitWords: splitWords
+    splitWords: splitWords,
+    getCardById: getCardById,
+    renderCards: renderCards
   };
 });
