@@ -345,6 +345,57 @@ p { color: var(--muted); max-width: var(--measure); }
   }
 }
 
+/* ---------- 6. Stack ---------- */
+.stack__highlights {
+  display: grid; gap: var(--sp-5);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.stack__hl { padding-top: var(--sp-4); border-top: 2px solid var(--accent); }
+.stack__hlTitle { font-family: var(--font-mono); font-size: .875rem; letter-spacing: .04em; margin-bottom: var(--sp-3); }
+.stack__hl p { font-size: var(--fs-small); }
+
+.stack__endToEnd {
+  margin: var(--sp-7) 0 var(--sp-8);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
+  color: var(--text); max-width: 78ch;
+}
+
+.stack__groups {
+  display: grid; gap: var(--sp-7);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.stack__groupTitle { display: block; color: var(--accent); margin-bottom: var(--sp-4); }
+.stack__list { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.stack__list li {
+  font-size: var(--fs-small); color: var(--muted);
+  padding: 5px 10px; border: 1px solid var(--hairline); border-radius: 4px;
+}
+.stack__list li:hover { color: var(--text); border-color: var(--text); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .stack__list li { transition: color .2s var(--ease), border-color .2s var(--ease); }
+}
+
+/* ---------- 6. Marquee ---------- */
+.marquee {
+  margin-top: clamp(var(--sp-8), 9vh, var(--sp-9));
+  padding-block: var(--sp-5);
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee__track { display: flex; gap: var(--sp-5); width: max-content; }
+.marquee__track span {
+  font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--text); opacity: .22; white-space: nowrap;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee__track { animation: marquee 42s linear infinite; }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+}
+
 /* ---------- 8. Utilidades ---------- */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0;

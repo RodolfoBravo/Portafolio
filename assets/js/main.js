@@ -510,6 +510,13 @@
     });
   }
 
+  // ---------- Marquee ----------
+  function initMarquee() {
+    var track = doc.getElementById('marqueeTrack');
+    if (!track || reduceMotion) return;
+    track.innerHTML = track.innerHTML + track.innerHTML;
+  }
+
   /* ---------- Arranque ---------- */
 
   ready(function () {
@@ -521,6 +528,7 @@
     initCounters();
     initFilters();
     initModal();
+    initMarquee();
   });
 
   /* ---------- API pública ---------- */
