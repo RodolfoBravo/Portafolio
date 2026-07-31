@@ -472,6 +472,48 @@ p { color: var(--muted); max-width: var(--measure); }
   .about__media { max-width: 220px; }
 }
 
+/* ---------- 6. Contact ---------- */
+.contact__grid {
+  display: grid; gap: clamp(var(--sp-7), 6vw, var(--sp-9));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: start;
+}
+.contact__direct { margin-top: var(--sp-7); padding-top: var(--sp-5); border-top: 1px solid var(--hairline); }
+.contact__directLabel { display: block; color: var(--faint); margin-bottom: var(--sp-4); }
+.contact__links { display: grid; gap: var(--sp-3); }
+.contact__links a {
+  display: inline-block; font-size: var(--fs-small); color: var(--muted);
+  border-bottom: 1px solid transparent;
+}
+.contact__links a:hover { color: var(--accent); border-color: var(--accent); }
+
+.form { display: grid; gap: var(--sp-5); }
+.form__row { display: grid; gap: var(--sp-2); }
+.form__label { color: var(--faint); }
+.form__input {
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--hairline); border-radius: var(--radius);
+  padding: 13px 15px; font-size: var(--fs-small);
+}
+.form__input:hover { border-color: rgba(244, 241, 234, .26); }
+.form__input:focus-visible { border-color: var(--accent); }
+.form__textarea { resize: vertical; min-height: 120px; }
+.form__submit { justify-self: start; }
+.form__submit[disabled] { opacity: .55; cursor: progress; }
+.form__status { font-size: var(--fs-small); min-height: 1.5em; }
+.form__status[data-state="ok"] { color: var(--live); }
+.form__status[data-state="error"] { color: #F87171; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact__links a { transition: color .2s var(--ease), border-color .2s var(--ease); }
+  .form__input { transition: border-color .2s var(--ease); }
+}
+
+/* ---------- 6. Footer ---------- */
+.footer { border-top: 1px solid var(--hairline); padding-block: var(--sp-7); }
+.footer__inner { display: flex; flex-wrap: wrap; gap: var(--sp-4) var(--sp-7); justify-content: space-between; }
+.footer .mono { color: var(--faint); }
+
 /* ---------- 8. Utilidades ---------- */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0;

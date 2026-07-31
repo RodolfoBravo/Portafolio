@@ -517,6 +517,51 @@
     track.innerHTML = track.innerHTML + track.innerHTML;
   }
 
+  // ---------- Formulario ----------
+  function initForm() {
+    var form = doc.getElementById('contactForm');
+    var status = doc.getElementById('formStatus');
+    var submit = doc.getElementById('formSubmit');
+    if (!form || !status || !submit) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+
+      if (form.getAttribute('action').indexOf('[FORMSPREE_ID]') !== -1) {
+        status.setAttribute('data-state', 'error');
+        status.textContent = win.I18n.t(state.lang, 'contact.error');
+        console.warn('Contact form action still contains [FORMSPREE_ID] placeholder - configure Formspree ID before publishing');
+        return;
+      }
+
+      submit.disabled = true;
+      status.removeAttribute('data-state');
+      status.textContent = win.I18n.t(state.lang, 'contact.sending');
+
+      win.fetch(form.getAttribute('action'), {
+        method: 'POST',
+        body: new win.FormData(form),
+        headers: { Accept: 'application/json' }
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        form.reset();
+        status.setAttribute('data-state', 'ok');
+        status.textContent = win.I18n.t(state.lang, 'contact.success');
+      }).catch(function () {
+        status.setAttribute('data-state', 'error');
+        status.textContent = win.I18n.t(state.lang, 'contact.error');
+      }).then(function () {
+        submit.disabled = false;
+      });
+    });
+  }
+
+  function initYear() {
+    var el = doc.getElementById('footerYear');
+    if (el) el.textContent = String(new Date().getFullYear());
+  }
+
   /* ---------- Arranque ---------- */
 
   ready(function () {
@@ -529,6 +574,8 @@
     initFilters();
     initModal();
     initMarquee();
+    initForm();
+    initYear();
   });
 
   /* ---------- API pública ---------- */

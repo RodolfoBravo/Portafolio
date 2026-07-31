@@ -329,10 +329,61 @@
         </div>
       </div>
     </section>
-    <section id="contact" class="section"><!-- Task 11 --></section>
+    <section class="section contact" id="contact">
+      <div class="container contact__grid">
+        <div class="contact__intro" data-reveal>
+          <span class="kicker" data-i18n="contact.kicker">Contacto</span>
+          <h2 data-reveal-words><span data-i18n="contact.title">¿Tienes un rol o un proyecto de IA en mente?</span></h2>
+          <p data-i18n="contact.lede"></p>
+
+          <div class="contact__direct">
+            <span class="mono contact__directLabel" data-i18n="contact.orDirect">O directo, sin formulario:</span>
+            <ul class="contact__links">
+              <li><a href="mailto:[EMAIL_PUBLICO]">[EMAIL_PUBLICO]</a></li>
+              <li><a href="https://www.linkedin.com/in/[LINKEDIN_USER]" target="_blank" rel="noopener">LinkedIn</a></li>
+              <li><a href="https://github.com/RodolfoBravo" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="cv/CVRodolfoBravo.pdf" download data-i18n="hero.ctaCv">Descargar CV</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <form class="form" id="contactForm" data-reveal
+              action="https://formspree.io/f/[FORMSPREE_ID]" method="POST">
+          <div class="form__row">
+            <label class="mono form__label" for="cName" data-i18n="contact.name">Nombre</label>
+            <input class="form__input" id="cName" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="form__row">
+            <label class="mono form__label" for="cEmail" data-i18n="contact.email">Correo</label>
+            <input class="form__input" id="cEmail" name="email" type="email" required autocomplete="email">
+          </div>
+          <div class="form__row">
+            <label class="mono form__label" for="cCompany" data-i18n="contact.company">Empresa (opcional)</label>
+            <input class="form__input" id="cCompany" name="company" type="text" autocomplete="organization">
+          </div>
+          <div class="form__row">
+            <label class="mono form__label" for="cMessage" data-i18n="contact.message">Cuéntame del rol</label>
+            <textarea class="form__input form__textarea" id="cMessage" name="message" rows="5" required></textarea>
+          </div>
+
+          <button class="btn btn--primary form__submit" type="submit" id="formSubmit" data-i18n="contact.send">
+            Enviar mensaje
+          </button>
+
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <footer id="footer"><!-- Task 11 --></footer>
+  <footer class="footer" id="footer">
+    <div class="container footer__inner">
+      <p class="mono footer__legal">
+        © <span id="footerYear">2026</span> Rodolfo Bravo. <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+      </p>
+      <p class="mono footer__built" data-i18n="footer.built"></p>
+    </div>
+  </footer>
 
   <div class="modal" id="modal" hidden>
     <div class="modal__backdrop" id="modalBackdrop"></div>
