@@ -1,7 +1,9 @@
 /* ============================================================
    Rodolfo Bravo — AI Engineer · Editorial Noir
-   1. Tokens  2. Reset  3. Base  4. Layout  5. Componentes
-   6. Secciones  7. Motion  8. Utilidades
+   1. Tokens  2. Reset  3. Base  4. Layout  5. Componentes base  6. Nav
+   7. Motion  8. Hero  9. Proof  10. Work  11. Stack  12. Production
+   13. Marquee  14. Timeline  15. About  16. Contact  17. Footer
+   18. Utilidades  19. Modal
    ============================================================ */
 
 /* ---------- 1. Tokens ---------- */
@@ -206,7 +208,7 @@ p { color: var(--muted); max-width: var(--measure); }
 }
 /* Con reduce, nada se oculta: [data-reveal] no recibe estilos y todo es visible. */
 
-/* ---------- 6. Hero ---------- */
+/* ---------- 8. Hero ---------- */
 .hero { position: relative; overflow: hidden; padding-block: clamp(64px, 10vh, 120px) var(--sp-8); }
 
 .hero__aurora {
@@ -271,7 +273,7 @@ p { color: var(--muted); max-width: var(--measure); }
   .hero__yearsLabel { margin-left: 0; }
 }
 
-/* ---------- 6. Proof ---------- */
+/* ---------- 9. Proof ---------- */
 .proof { padding-block: clamp(var(--sp-8), 8vh, var(--sp-9)); }
 .proof__grid {
   display: grid; gap: var(--sp-7);
@@ -286,7 +288,7 @@ p { color: var(--muted); max-width: var(--measure); }
 }
 .proof__label { color: var(--muted); max-width: 22ch; line-height: 1.7; }
 
-/* ---------- 6. Work ---------- */
+/* ---------- 10. Work ---------- */
 .work__filters { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-7); }
 .work__filter {
   font-family: var(--font-mono); font-size: var(--fs-mono);
@@ -345,7 +347,7 @@ p { color: var(--muted); max-width: var(--measure); }
   }
 }
 
-/* ---------- 6. Stack ---------- */
+/* ---------- 11. Stack ---------- */
 .stack__highlights {
   display: grid; gap: var(--sp-5);
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -377,7 +379,7 @@ p { color: var(--muted); max-width: var(--measure); }
   .stack__list li { transition: color .2s var(--ease), border-color .2s var(--ease); }
 }
 
-/* ---------- 6. Production ---------- */
+/* ---------- 12. Production ---------- */
 .diagram {
   margin: 0 0 var(--sp-9);
   padding: clamp(var(--sp-5), 4vw, var(--sp-7));
@@ -410,7 +412,7 @@ p { color: var(--muted); max-width: var(--measure); }
 .principle__title { font-size: var(--fs-h3); margin-bottom: var(--sp-3); max-width: 20ch; }
 .principle p { font-size: var(--fs-small); }
 
-/* ---------- 6. Marquee ---------- */
+/* ---------- 13. Marquee ---------- */
 .marquee {
   margin-top: clamp(var(--sp-8), 9vh, var(--sp-9));
   padding-block: var(--sp-5);
@@ -429,7 +431,7 @@ p { color: var(--muted); max-width: var(--measure); }
   @keyframes marquee { to { transform: translateX(-50%); } }
 }
 
-/* ---------- 6. Timeline ---------- */
+/* ---------- 14. Timeline ---------- */
 .timeline { display: grid; gap: 0; }
 .tl {
   display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: var(--sp-6);
@@ -449,7 +451,7 @@ p { color: var(--muted); max-width: var(--measure); }
   .tl { grid-template-columns: 1fr; gap: var(--sp-3); }
 }
 
-/* ---------- 6. About ---------- */
+/* ---------- 15. About ---------- */
 .about__grid {
   display: grid; gap: clamp(var(--sp-6), 5vw, var(--sp-9));
   grid-template-columns: minmax(200px, 300px) minmax(0, 1fr);
@@ -472,7 +474,7 @@ p { color: var(--muted); max-width: var(--measure); }
   .about__media { max-width: 220px; }
 }
 
-/* ---------- 6. Contact ---------- */
+/* ---------- 16. Contact ---------- */
 .contact__grid {
   display: grid; gap: clamp(var(--sp-7), 6vw, var(--sp-9));
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -509,12 +511,12 @@ p { color: var(--muted); max-width: var(--measure); }
   .form__input { transition: border-color .2s var(--ease); }
 }
 
-/* ---------- 6. Footer ---------- */
+/* ---------- 17. Footer ---------- */
 .footer { border-top: 1px solid var(--hairline); padding-block: var(--sp-7); }
 .footer__inner { display: flex; flex-wrap: wrap; gap: var(--sp-4) var(--sp-7); justify-content: space-between; }
 .footer .mono { color: var(--faint); }
 
-/* ---------- 8. Utilidades ---------- */
+/* ---------- 18. Utilidades ---------- */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0;
   margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
@@ -530,7 +532,7 @@ p { color: var(--muted); max-width: var(--measure); }
   .skip-link { transition: top .2s var(--ease); }
 }
 
-/* ---------- 6. Modal ---------- */
+/* ---------- 19. Modal ---------- */
 .modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: var(--sp-4); }
 .modal[hidden] { display: none; }
 .modal__backdrop { position: absolute; inset: 0; background: rgba(5, 5, 6, .82); backdrop-filter: blur(6px); }
