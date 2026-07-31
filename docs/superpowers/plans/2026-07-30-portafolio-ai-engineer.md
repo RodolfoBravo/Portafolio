@@ -39,7 +39,17 @@ No usar `type="module"`: los módulos ES fallan por CORS en `file://` y romperí
 
 **Un solo acento.** `--accent` se reserva para: kicker del hero, una palabra del h1, números de métricas, hover de enlaces, CTA primario. Nunca como fondo de bloques grandes.
 
-**Motion:** todo efecto va dentro de `@media (prefers-reduced-motion: no-preference)`. Con `reduce`, el contenido debe quedar **visible y completo** — jamás oculto. Ninguna animación supera 400ms.
+**Motion:** todo efecto va dentro de `@media (prefers-reduced-motion: no-preference)`. Con `reduce`, el contenido debe quedar **visible y completo** — jamás oculto.
+
+Límites de duración por tipo de movimiento. Corregido durante la Task 4: el límite único de 400ms estaba mal especificado y habría degradado el diseño.
+
+| Tipo | Límite | Razón |
+|---|---|---|
+| Transición de interacción (hover, foco, apertura de menú o modal) | ≤ 250ms | Responde a una acción del usuario; el retardo se siente lento. |
+| Animación de entrada (scroll reveal, reveal por palabras) | ≤ 700ms | Es ambiental y no bloquea nada. A 400ms un reveal escalonado se ve abrupto. |
+| Loop ambiental (pulso del badge, marquee) | sin límite | La duración larga es lo que lo hace suave. Un pulso de 400ms sería un parpadeo agresivo — peor para accesibilidad, no mejor. Obligatorio que esté gateado por `no-preference`. |
+
+Ningún movimiento puede retrasar la lectura del contenido ni impedir la interacción.
 
 **Accesibilidad:** `<meta viewport>` sin `maximum-scale` ni `user-scalable=no`. `:focus-visible` visible en todo lo interactivo. Sin saltos en la jerarquía de encabezados. Contraste AA.
 
