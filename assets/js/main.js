@@ -382,8 +382,17 @@
   }
 
   // ---------- Modal ----------
-  var modalEl, modalBody, lastFocused = null;
+  var modalEl, modalBody, inertTargets = [];
   var FOCUSABLE = 'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+  // El fondo (header/main/footer) se marca `inert` mientras el modal está abierto.
+  // Es defensa en profundidad junto al focus trap: el soporte de `aria-modal` para
+  // restringir el cursor virtual de lectores de pantalla es inconsistente entre
+  // combinaciones de navegador y AT, así que sin esto un usuario de lector de
+  // pantalla podría navegar al contenido de detrás sin pasar por el trap de teclado.
+  function setInert(on) {
+    for (var i = 0; i < inertTargets.length; i++) inertTargets[i].inert = on;
+  }
 
   function findCase(id) {
     var data = win.CaseStudies || [];
@@ -429,23 +438,33 @@
     var c = findCase(id);
     if (!c || !modalEl) return;
 
-    lastFocused = getCardById(id);
     modalBody.innerHTML = buildModalHtml(c, state.lang);
     modalEl.removeAttribute('hidden');
     modalEl.setAttribute('data-case', id);
     doc.body.setAttribute('data-modal-open', 'true');
+    setInert(true);
     doc.getElementById('modalClose').focus();
   }
 
   function closeCase() {
     if (!modalEl || modalEl.hasAttribute('hidden')) return;
+
+    // El id se lee ANTES de limpiar `data-case`: no guardamos una referencia al
+    // nodo de la carta capturada en `openCase`, porque un cambio de idioma mientras
+    // el modal está abierto reconstruye `#workGrid` (Task 6) y deja esa referencia
+    // desconectada del documento. Volver a resolver la carta por id en este momento,
+    // con `cardsById` ya actualizado, evita que el foco caiga al <body>.
+    var openId = modalEl.getAttribute('data-case');
+
     modalEl.setAttribute('hidden', '');
     modalEl.removeAttribute('data-case');
     doc.body.removeAttribute('data-modal-open');
-    if (lastFocused) {
-      var btn = lastFocused.querySelector('[data-open]');
-      (btn || lastFocused).focus();
-    }
+    setInert(false);
+
+    var card = openId ? getCardById(openId) : null;
+    var btn = card && card.querySelector('[data-open]');
+    if (btn) btn.focus();
+    else if (card) card.focus();
   }
 
   function trapFocus(e) {
@@ -461,6 +480,11 @@
     modalEl = doc.getElementById('modal');
     modalBody = doc.getElementById('modalBody');
     if (!modalEl) return;
+
+    // El modal es hermano de <header>, <main> y <footer> en el HTML, nunca su
+    // descendiente, así que marcarlos `inert` no puede alcanzar ni desactivar el diálogo.
+    inertTargets = [doc.querySelector('header'), doc.querySelector('main'), doc.querySelector('footer')]
+      .filter(function (el) { return !!el; });
 
     doc.addEventListener('click', function (e) {
       var opener = e.target.closest('[data-open]');
