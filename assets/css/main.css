@@ -213,10 +213,21 @@ p { color: var(--muted); max-width: var(--measure); }
    Sin `data-js="true"` (JS no llegó a ejecutar), tampoco: ver Fix 9. */
 
 /* ---------- 8. Hero ---------- */
-.hero { position: relative; overflow: hidden; padding-block: clamp(64px, 10vh, 120px) var(--sp-8); }
+/* `min-height` reserva el alto del bloque para que el font swap de Google Fonts
+   (Georgia -> Instrument Serif con `display=swap`) no reduzca/aumente la caja y
+   arrastre `.hero__aurora` con ella (CLS). Es un piso relativo al viewport, no
+   un alto fijo: nunca recorta contenido, solo evita que la caja encoja. */
+.hero {
+  position: relative; overflow: hidden;
+  padding-block: clamp(64px, 10vh, 120px) var(--sp-8);
+  min-height: clamp(600px, 90vh, 860px);
+}
 
 .hero__aurora {
-  position: absolute; inset: -20% -10% auto; height: 130%;
+  /* `height: 100vh` (en vez de 130% del alto de `.hero`) desacopla la aurora del
+     alto del contenido: un reflow del h1 por el swap de fuente ya no puede
+     mover este elemento pintado, que es lo que reportó Lighthouse como CLS. */
+  position: absolute; inset: -20% -10% auto; height: 100vh;
   pointer-events: none;
   background:
     radial-gradient(38% 46% at calc(18% + var(--mx, 0px) * .04) calc(12% + var(--my, 0px) * .04),
@@ -427,7 +438,10 @@ p { color: var(--muted); max-width: var(--measure); }
 .marquee__track { display: flex; gap: var(--sp-5); width: max-content; }
 .marquee__track span {
   font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem);
-  color: var(--text); opacity: .22; white-space: nowrap;
+  /* opacity .22 compone a ~1.83:1 sobre --bg (falla el 3:1 de texto grande).
+     .38 compone a rgb(100,98,96) ~= 3.24:1: pasa con margen sin dejar de ser
+     el elemento más tenue de la jerarquía visual. */
+  color: var(--text); opacity: .38; white-space: nowrap;
 }
 @media (prefers-reduced-motion: no-preference) {
   .marquee__track { animation: marquee 42s linear infinite; }
