@@ -357,8 +357,8 @@ p { color: var(--muted); max-width: var(--measure); }
 .stack__endToEnd {
   margin: var(--sp-7) 0 var(--sp-8);
   padding: var(--sp-5) var(--sp-6);
-  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
-  color: var(--text); max-width: 78ch;
+  background: var(--surface); border-left: 2px solid var(--accent);
+  color: var(--text); font-size: var(--fs-h3); line-height: 1.5; max-width: 78ch;
 }
 
 .stack__groups {
