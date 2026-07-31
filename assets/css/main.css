@@ -12,7 +12,7 @@
   --hairline: rgba(244, 241, 234, .12);
   --text: #F4F1EA;
   --muted: rgba(244, 241, 234, .62);
-  --faint: rgba(244, 241, 234, .38);
+  --faint: rgba(244, 241, 234, .55);
   --accent: #C8FF00;
   --accent-ink: #0B0B0C;
   --live: #4ADE80;
@@ -108,11 +108,14 @@ p { color: var(--muted); max-width: var(--measure); }
   padding: 13px 22px; border-radius: var(--radius);
   border: 1px solid var(--hairline);
   font-size: var(--fs-small); font-weight: 500;
-  transition: border-color .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease);
 }
 .btn:hover { border-color: var(--text); }
 .btn--primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
 .btn--primary:hover { background: var(--text); border-color: var(--text); color: var(--bg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: border-color .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease); }
+}
 
 /* ---------- 8. Utilidades ---------- */
 .sr-only {
@@ -123,6 +126,9 @@ p { color: var(--muted); max-width: var(--measure); }
   position: absolute; left: var(--sp-4); top: -100px; z-index: 100;
   background: var(--accent); color: var(--accent-ink);
   padding: var(--sp-3) var(--sp-4); border-radius: var(--radius); font-weight: 600;
-  transition: top .2s var(--ease);
 }
 .skip-link:focus { top: var(--sp-4); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link { transition: top .2s var(--ease); }
+}
