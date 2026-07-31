@@ -58,7 +58,7 @@ aceptada desde la Task 1, no un descuido.
 | 6 | Poner el usuario de LinkedIn (`[LINKEDIN_USER]`) | `index.html` (incluye el `sameAs` del JSON-LD) |
 | 7 | Actualizar el CV en PDF: 7 años y perfil AI Engineer | `cv/CVRodolfoBravo.pdf` |
 | 8 | Generar `images/og-image.png` de 1200×630 | `images/` |
-| 9 | Si usas dominio propio, actualizar las cuatro URLs absolutas (`canonical`, `og:url`, `og:image`, JSON-LD `url`) | `index.html` |
+| 9 | Si usas dominio propio, actualizar las cinco URLs absolutas: `canonical`, `og:url`, `og:image`, `twitter:image` (comparte valor con `og:image`, hay que editar ambas) y `url` del JSON-LD | `index.html` |
 
 Buscar todos los marcadores pendientes:
 
