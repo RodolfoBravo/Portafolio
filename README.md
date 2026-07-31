@@ -51,8 +51,8 @@ aceptada desde la Task 1, no un descuido.
 | # | Acción | Dónde |
 |---|---|---|
 | 1 | **Urgente — revocar la API key de Google Maps** que quedó expuesta en el historial de git de la plantilla original. Borrar el archivo del repo **no** invalida la key: sigue siendo pública y utilizable mientras no se revoque desde Google Cloud Console. | Google Cloud Console |
-| 2 | Sustituir todos los `[XX]` por cifras reales | `assets/js/data.js`, `assets/js/i18n.js`, `index.html` |
-| 3 | Sustituir `[Empresa]` y `[Rol]` por los reales | `assets/js/i18n.js`, `assets/js/data.js` |
+| 2 | Sustituir los 56 `[XX]` por cifras reales — 48 en `data.js`, 6 en `i18n.js`, 2 en `index.html` | `assets/js/data.js`, `assets/js/i18n.js`, `index.html` |
+| 3 | Sustituir los 2 `[Empresa]` por los reales | `assets/js/data.js` |
 | 4 | Crear cuenta en Formspree y pegar el ID | `index.html`, atributo `action` del formulario |
 | 5 | Definir el email público (`[EMAIL_PUBLICO]`) | `index.html` |
 | 6 | Poner el usuario de LinkedIn (`[LINKEDIN_USER]`) | `index.html` (incluye el `sameAs` del JSON-LD) |
@@ -64,7 +64,7 @@ aceptada desde la Task 1, no un descuido.
 Buscar todos los marcadores pendientes:
 
 ```bash
-grep -rn "\[XX\]\|\[Empresa\]\|\[Rol\]\|\[EMAIL_PUBLICO\]\|\[LINKEDIN_USER\]\|\[FORMSPREE_ID\]" index.html assets/
+grep -rn "\[XX\]\|\[Empresa\]\|\[EMAIL_PUBLICO\]\|\[LINKEDIN_USER\]\|\[FORMSPREE_ID\]" index.html assets/
 ```
 
 ## Nota sobre los case studies
