@@ -11,6 +11,7 @@
       'a11y.langToggle': 'Cambiar idioma a inglés',
       'a11y.menu': 'Abrir menú de navegación',
       'a11y.closeModal': 'Cerrar detalle del proyecto',
+      'a11y.metrics': 'Métricas',
 
       'nav.landmark': 'Principal',
       'nav.work': 'Casos',
@@ -109,6 +110,7 @@
       'a11y.langToggle': 'Switch language to Spanish',
       'a11y.menu': 'Open navigation menu',
       'a11y.closeModal': 'Close project detail',
+      'a11y.metrics': 'Metrics',
 
       'nav.landmark': 'Main',
       'nav.work': 'Work',
