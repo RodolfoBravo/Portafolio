@@ -110,11 +110,136 @@
     else doc.addEventListener('DOMContentLoaded', fn);
   }
 
+  // ---------- Motor de reveal ----------
+  var revealObserver = null;
+
+  function getRevealObserver() {
+    if (revealObserver || !win.IntersectionObserver) return revealObserver;
+    revealObserver = new win.IntersectionObserver(function (entries, obs) {
+      for (var i = 0; i < entries.length; i++) {
+        if (!entries[i].isIntersecting) continue;
+        entries[i].target.setAttribute('data-revealed', 'true');
+        obs.unobserve(entries[i].target);
+      }
+    }, { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+    return revealObserver;
+  }
+
+  function observeReveal(selector) {
+    var nodes = doc.querySelectorAll(selector);
+    var obs = getRevealObserver();
+    for (var i = 0; i < nodes.length; i++) {
+      if (!obs) { nodes[i].setAttribute('data-revealed', 'true'); continue; }
+      obs.observe(nodes[i]);
+    }
+  }
+
+  function splitWords(el) {
+    if (el.getAttribute('data-split') === 'true') return;
+    var STAGGER = 45;
+    var index = 0;
+    var children = el.querySelectorAll('[data-i18n]');
+
+    for (var c = 0; c < children.length; c++) {
+      var words = String(children[c].textContent).trim().split(/\s+/);
+      var html = '';
+      for (var w = 0; w < words.length; w++) {
+        html += '<span class="word"><span style="--d:' + (index * STAGGER) + 'ms">' + words[w] + '</span></span> ';
+        index++;
+      }
+      children[c].innerHTML = html;
+    }
+    el.setAttribute('data-split', 'true');
+  }
+
+  function initReveal() {
+    // El h1 se parte en palabras antes de observarlo.
+    var titles = doc.querySelectorAll('[data-reveal-words]');
+    for (var i = 0; i < titles.length; i++) {
+      if (!reduceMotion) splitWords(titles[i]);
+      titles[i].setAttribute('data-reveal', '');
+    }
+    observeReveal('[data-reveal]');
+  }
+
+  // Al cambiar idioma, i18n reescribe el textContent y destruye los <span>.
+  // Se vuelve a partir y se marca como revelado para que no quede oculto.
+  //
+  // IMPORTANTE: `initLang()` dispara `setLang` en el arranque, lo que ejecutaría este
+  // suscriptor ANTES de `initReveal()` y dejaría los titulares ya revelados, matando la
+  // animación de entrada del h1. La bandera salta esa primera invocación.
+  var langInitialized = false;
+
+  onLangChange(function () {
+    if (!langInitialized) { langInitialized = true; return; }
+    var titles = doc.querySelectorAll('[data-reveal-words]');
+    for (var i = 0; i < titles.length; i++) {
+      titles[i].removeAttribute('data-split');
+      if (!reduceMotion) splitWords(titles[i]);
+      titles[i].setAttribute('data-revealed', 'true');
+    }
+  });
+
+  // ---------- Aurora reactiva al cursor ----------
+  function initAurora() {
+    var hero = doc.getElementById('hero');
+    if (!hero || reduceMotion) return;
+    var pending = false, lastX = 0, lastY = 0;
+
+    hero.addEventListener('pointermove', function (e) {
+      lastX = e.clientX - win.innerWidth / 2;
+      lastY = e.clientY - win.innerHeight / 2;
+      if (pending) return;
+      pending = true;
+      win.requestAnimationFrame(function () {
+        hero.style.setProperty('--mx', lastX.toFixed(1) + 'px');
+        hero.style.setProperty('--my', lastY.toFixed(1) + 'px');
+        pending = false;
+      });
+    }, { passive: true });
+  }
+
+  // ---------- Scramble del rol ----------
+  function initScramble() {
+    var el = doc.getElementById('roleScramble');
+    if (!el) return;
+    var ROLES = ['AI Engineer', 'LLM Systems Engineer', 'AI Solutions Architect'];
+    var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&/<>[]{}';
+    var idx = 0;
+
+    if (reduceMotion) { el.textContent = ROLES[0]; return; }
+
+    function scrambleTo(target) {
+      var frame = 0;
+      var from = el.textContent;
+      var len = Math.max(from.length, target.length);
+      var id = win.setInterval(function () {
+        var out = '';
+        for (var i = 0; i < len; i++) {
+          if (i < frame - 4) out += target[i] || '';
+          else if (i < frame) out += CHARS[Math.floor(Math.random() * CHARS.length)];
+          else out += target[i] ? (from[i] || '') : '';
+        }
+        el.textContent = out;
+        frame++;
+        if (frame > len + 4) { win.clearInterval(id); el.textContent = target; }
+      }, 32);
+    }
+
+    win.setInterval(function () {
+      idx = (idx + 1) % ROLES.length;
+      scrambleTo(ROLES[idx]);
+    }, 4200);
+  }
+
   /* ---------- Arranque ---------- */
 
   ready(function () {
     initLang();
     initNav();
+    initReveal();
+    initAurora();
+    initScramble();
   });
 
   /* ---------- API pública ---------- */
@@ -124,6 +249,8 @@
     reduceMotion: reduceMotion,
     setLang: setLang,
     onLangChange: onLangChange,
-    ready: ready
+    ready: ready,
+    observeReveal: observeReveal,
+    splitWords: splitWords
   };
 });

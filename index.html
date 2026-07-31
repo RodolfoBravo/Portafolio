@@ -52,7 +52,51 @@
   </header>
 
   <main id="main">
-    <section id="hero"><!-- Task 4 --></section>
+    <section class="hero" id="hero">
+      <div class="hero__aurora" aria-hidden="true"></div>
+      <div class="container hero__inner">
+        <div class="hero__main">
+          <span class="kicker hero__kicker" data-reveal data-i18n="hero.kicker">AI Engineer</span>
+
+          <p class="hero__available" data-reveal>
+            <span class="hero__dot" aria-hidden="true"></span>
+            <span class="mono" data-i18n="hero.available">Disponible para proyectos</span>
+          </p>
+
+          <h1 class="hero__title" data-reveal-words>
+            <span data-i18n="hero.h1a">Construyo IA que</span>
+            <em class="accent" data-i18n="hero.h1accent">sobrevive</em>
+            <span data-i18n="hero.h1b">a producción.</span>
+          </h1>
+
+          <p class="hero__lede" data-reveal data-i18n="hero.lede"></p>
+
+          <p class="hero__endToEnd mono" data-reveal data-i18n="hero.endToEnd"></p>
+
+          <div class="hero__ctas" data-reveal>
+            <a class="btn btn--primary" href="#work" data-i18n="hero.ctaWork">Ver casos</a>
+            <a class="btn" href="cv/CVRodolfoBravo.pdf" download data-i18n="hero.ctaCv">Descargar CV</a>
+            <a class="btn" href="mailto:[EMAIL_PUBLICO]" data-i18n="hero.ctaMail">Escríbeme</a>
+          </div>
+        </div>
+
+        <aside class="hero__aside" data-reveal>
+          <div class="hero__role">
+            <span class="mono hero__roleLabel">Rol</span>
+            <span class="hero__roleText" id="roleScramble">AI Engineer</span>
+          </div>
+          <div class="hero__years">
+            <span class="hero__yearsNum">07</span>
+            <span class="mono hero__yearsLabel" data-i18n="proof.years">Años construyendo software</span>
+          </div>
+        </aside>
+      </div>
+
+      <div class="container hero__rule" data-reveal>
+        <span class="mono">Next.js</span><span class="mono">Angular</span><span class="mono">Python</span>
+        <span class="mono">Claude API</span><span class="mono">AWS · GCP · Azure</span><span class="mono">Stripe</span>
+      </div>
+    </section>
     <section id="proof" class="section"><!-- Task 5 --></section>
     <section id="work" class="section"><!-- Task 6 --></section>
     <section id="stack" class="section"><!-- Task 8 --></section>

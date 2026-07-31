@@ -186,6 +186,91 @@ p { color: var(--muted); max-width: var(--measure); }
 
 #main { padding-top: var(--nav-h); }
 
+/* ---------- 7. Motion: sistema de reveal ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+  }
+  [data-reveal][data-revealed="true"] { opacity: 1; transform: none; }
+
+  .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .word > span {
+    display: inline-block;
+    transform: translateY(105%);
+    transition: transform .7s var(--ease);
+    transition-delay: var(--d, 0ms);
+  }
+  [data-revealed="true"] .word > span { transform: none; }
+}
+/* Con reduce, nada se oculta: [data-reveal] no recibe estilos y todo es visible. */
+
+/* ---------- 6. Hero ---------- */
+.hero { position: relative; overflow: hidden; padding-block: clamp(64px, 10vh, 120px) var(--sp-8); }
+
+.hero__aurora {
+  position: absolute; inset: -20% -10% auto; height: 130%;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 46% at calc(18% + var(--mx, 0px) * .04) calc(12% + var(--my, 0px) * .04),
+      rgba(200, 255, 0, .11), transparent 62%),
+    radial-gradient(34% 40% at calc(84% - var(--mx, 0px) * .03) calc(72% - var(--my, 0px) * .03),
+      rgba(200, 255, 0, .05), transparent 66%);
+}
+
+.hero__inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(var(--sp-6), 5vw, var(--sp-9)); align-items: end;
+}
+
+.hero__available { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-4); }
+.hero__available .mono { color: var(--muted); }
+.hero__dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--live); box-shadow: 0 0 10px var(--live);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero__dot { animation: pulse 2.4s var(--ease) infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+}
+
+.hero__title { margin-top: var(--sp-5); max-width: 19ch; }
+.hero__title em { font-style: italic; }
+.hero__lede { margin-top: var(--sp-5); max-width: 46ch; }
+.hero__endToEnd {
+  margin-top: var(--sp-4); padding-left: var(--sp-4);
+  border-left: 2px solid var(--accent);
+  color: var(--muted); letter-spacing: .08em; max-width: 52ch; line-height: 1.8;
+}
+.hero__ctas { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-7); }
+
+.hero__aside { display: grid; gap: var(--sp-6); text-align: right; padding-bottom: var(--sp-2); }
+.hero__role { display: grid; gap: var(--sp-1); }
+.hero__roleLabel { color: var(--faint); }
+.hero__roleText { font-family: var(--font-mono); font-size: .8125rem; color: var(--accent); }
+.hero__years { display: grid; gap: var(--sp-2); }
+.hero__yearsNum {
+  font-family: var(--font-display); font-size: clamp(4rem, 9vw, 7rem);
+  line-height: .78; letter-spacing: -.05em; color: var(--text); opacity: .18;
+}
+.hero__yearsLabel { color: var(--faint); max-width: 14ch; margin-left: auto; line-height: 1.6; }
+
+.hero__rule {
+  position: relative; z-index: 1;
+  display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6);
+  margin-top: clamp(var(--sp-8), 9vh, var(--sp-10));
+  padding-top: var(--sp-4); border-top: 1px solid var(--hairline);
+}
+.hero__rule .mono { color: var(--faint); }
+
+@media (max-width: 780px) {
+  .hero__inner { grid-template-columns: 1fr; }
+  .hero__aside { text-align: left; grid-auto-flow: column; justify-content: start; gap: var(--sp-8); align-items: end; }
+  .hero__yearsLabel { margin-left: 0; }
+}
+
 /* ---------- 8. Utilidades ---------- */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0;
