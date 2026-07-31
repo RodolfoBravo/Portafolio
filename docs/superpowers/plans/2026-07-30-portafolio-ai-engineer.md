@@ -52,6 +52,11 @@ No usar `type="module"`: los módulos ES fallan por CORS en `file://` y romperí
 
 **Servidor de desarrollo:** `python -m http.server 8000` desde la raíz del proyecto. Verificar en `http://localhost:8000`.
 
+**Comando de tests:** `node --test` a secas, sin argumento de directorio. Verificado en este
+entorno (Windows, Node 22.14): `node --test tests/` falla porque Node interpreta la ruta como
+especificador de módulo en lugar de directorio a explorar. La auto-detección encuentra
+`tests/*.test.js` correctamente.
+
 ---
 
 ## Estructura de archivos
@@ -388,7 +393,7 @@ test('ninguna traducción está vacía', () => {
 
 - [ ] **Step 2: Correr el test para verificar que falla**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: FAIL — `Cannot find module '../assets/js/i18n.js'`
 
 - [ ] **Step 3: Escribir `assets/js/i18n.js`**
@@ -641,7 +646,7 @@ Diccionario completo del sitio. Las claves siguen el patrón `seccion.elemento`.
 
 - [ ] **Step 4: Correr los tests**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: PASS, 7 tests. Si el test de paridad de claves falla, indica exactamente qué clave falta en cuál idioma — corregirla.
 
 - [ ] **Step 5: Commit**
@@ -1493,7 +1498,7 @@ test('ningún case study contiene HTML crudo en sus textos', () => {
 
 - [ ] **Step 2: Correr el test para verificar que falla**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: FAIL — `Cannot find module '../assets/js/data.js'`
 
 - [ ] **Step 3: Escribir `assets/js/data.js`**
@@ -1701,7 +1706,7 @@ Los seis casos, con el contenido definitivo del spec sección 8.3.
 
 - [ ] **Step 4: Correr los tests**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: PASS, 13 tests (7 de i18n + 6 de data).
 
 - [ ] **Step 5: Escribir el HTML de la sección de trabajo**
@@ -2200,7 +2205,7 @@ Y dentro de `en`:
 
 - [ ] **Step 2: Correr los tests de paridad**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: PASS. Si falta una clave en un idioma, el test `los diccionarios es y en tienen exactamente las mismas claves` la señala por nombre.
 
 - [ ] **Step 3: Escribir el HTML del stack**
@@ -2567,7 +2572,7 @@ Y dentro de `en`:
 
 - [ ] **Step 2: Correr los tests de paridad**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: PASS.
 
 - [ ] **Step 3: Escribir el HTML de las dos secciones**
@@ -2983,7 +2988,7 @@ python -m http.server 8000
 Validan la lógica pura: paridad de claves entre idiomas e integridad de los case studies.
 
 ```bash
-node --test tests/
+node --test
 ```
 
 ## Estructura
@@ -3000,7 +3005,7 @@ Para editar un case study se modifica su objeto en `assets/js/data.js`. Las cart
 y el modal se regeneran desde ahí; no hay que tocar el HTML.
 
 Para agregar o cambiar un texto se edita `assets/js/i18n.js` **en los dos idiomas**.
-Si olvidas uno, `node --test tests/` lo detecta.
+Si olvidas uno, `node --test` lo detecta.
 
 ## Pendientes antes de publicar
 
@@ -3032,7 +3037,7 @@ midió una métrica y no hay respuesta, la candidatura se cae ahí.
 
 - [ ] **Step 3: Correr la suite completa de tests**
 
-Run: `node --test tests/`
+Run: `node --test`
 Expected: PASS, 13 tests.
 
 - [ ] **Step 4: Contar los marcadores pendientes**
