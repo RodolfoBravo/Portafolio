@@ -15,8 +15,12 @@
   --text: #F4F1EA;
   --muted: rgba(244, 241, 234, .62);
   --faint: rgba(244, 241, 234, .55);
-  --accent: #C8FF00;
+  --accent: #4A8CFF;
   --accent-ink: #0B0B0C;
+  /* Los glows usan rgba() literal porque necesitan alfa; mantener sincronizado
+     con --accent. Alfas más altos que el acento lima anterior: a igual alfa un
+     azul (luminancia .26) casi desaparece donde el lima (.84) se veía. */
+  --accent-rgb: 74, 140, 255;
   --live: #4ADE80;
 
   --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -231,9 +235,9 @@ p { color: var(--muted); max-width: var(--measure); }
   pointer-events: none;
   background:
     radial-gradient(38% 46% at calc(18% + var(--mx, 0px) * .04) calc(12% + var(--my, 0px) * .04),
-      rgba(200, 255, 0, .11), transparent 62%),
+      rgba(var(--accent-rgb), .22), transparent 62%),
     radial-gradient(34% 40% at calc(84% - var(--mx, 0px) * .03) calc(72% - var(--my, 0px) * .03),
-      rgba(200, 255, 0, .05), transparent 66%);
+      rgba(var(--accent-rgb), .10), transparent 66%);
 }
 
 .hero__inner {
@@ -327,7 +331,7 @@ p { color: var(--muted); max-width: var(--measure); }
 
 .card::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
-  background: radial-gradient(340px circle at var(--px, 50%) var(--py, 50%), rgba(200, 255, 0, .07), transparent 70%);
+  background: radial-gradient(340px circle at var(--px, 50%) var(--py, 50%), rgba(var(--accent-rgb), .14), transparent 70%);
 }
 
 .card__top { display: flex; align-items: center; gap: var(--sp-3); }
