@@ -1478,14 +1478,16 @@ test('cada case study tiene los dos idiomas completos', () => {
   }
 });
 
-test('todo case study conserva marcadores pendientes de sustituir', () => {
-  // Guardia intencional: si algún día no queda ningún [XX], es que Rodolfo ya
-  // puso datos reales — entonces este test se actualiza a mano. Mientras haya
-  // marcadores, verificamos que no se hayan perdido silenciosamente.
-  const withPlaceholders = CaseStudies.filter(c =>
-    JSON.stringify(c).includes('[XX]') || JSON.stringify(c).includes('[Empresa]'));
-  assert.ok(withPlaceholders.length > 0,
-    'ningún case study tiene marcadores: si ya son datos reales, actualiza este test');
+test('ningún case study contiene HTML crudo en sus textos', () => {
+  // Los textos se insertan vía innerHTML al construir cartas y modal, así que
+  // una etiqueta suelta rompería el layout. Este test la detecta antes.
+  for (const c of CaseStudies) {
+    for (const lang of ['es', 'en']) {
+      const blob = [c[lang].title, c[lang].tagline, c[lang].problem,
+                    c[lang].solution, c[lang].learned, ...c[lang].impact].join(' ');
+      assert.ok(!/<[a-z/]/i.test(blob), `${c.id}.${lang} contiene HTML crudo`);
+    }
+  }
 });
 ```
 
