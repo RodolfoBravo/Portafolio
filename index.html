@@ -20,7 +20,36 @@
 <body>
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Ir al contenido</a>
 
-  <header id="nav"><!-- Task 3 --></header>
+  <header class="nav" id="nav">
+    <div class="nav__progress" id="navProgress" aria-hidden="true"></div>
+    <div class="container nav__inner">
+      <a class="nav__brand" href="#hero">
+        Rodolfo Bravo
+        <span class="nav__brandRole mono">AI Engineer</span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Principal">
+        <a href="#work" data-i18n="nav.work">Casos</a>
+        <a href="#stack" data-i18n="nav.stack">Stack</a>
+        <a href="#production" data-i18n="nav.production">Producción</a>
+        <a href="#experience" data-i18n="nav.experience">Experiencia</a>
+        <a href="#about" data-i18n="nav.about">Sobre mí</a>
+        <a href="#contact" data-i18n="nav.contact">Contacto</a>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="nav__lang mono" id="langToggle" type="button"
+                aria-pressed="false" data-i18n-attr="aria-label:a11y.langToggle">
+          <span class="nav__langOn">ES</span><span class="nav__langSep">/</span><span class="nav__langOff">EN</span>
+        </button>
+        <button class="nav__burger" id="navBurger" type="button"
+                aria-expanded="false" aria-controls="navLinks"
+                data-i18n-attr="aria-label:a11y.menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
   <main id="main">
     <section id="hero"><!-- Task 4 --></section>
