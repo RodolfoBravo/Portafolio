@@ -8,7 +8,7 @@
   var DICT = {
     es: {
       'a11y.skip': 'Ir al contenido',
-      'a11y.langToggle': 'ES / EN — cambiar idioma a inglés',
+      'a11y.langToggle': 'ES/EN — cambiar idioma a inglés',
       'a11y.menu': 'Abrir menú de navegación',
       'a11y.closeModal': 'Cerrar detalle del proyecto',
       'a11y.metrics': 'Métricas',
@@ -141,7 +141,7 @@
     },
     en: {
       'a11y.skip': 'Skip to content',
-      'a11y.langToggle': 'ES / EN — switch language to Spanish',
+      'a11y.langToggle': 'ES/EN — switch language to Spanish',
       'a11y.menu': 'Open navigation menu',
       'a11y.closeModal': 'Close project detail',
       'a11y.metrics': 'Metrics',
