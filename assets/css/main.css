@@ -178,7 +178,7 @@ p { color: var(--muted); max-width: var(--measure); }
     padding: var(--sp-3) var(--gutter) var(--sp-5);
     transform: translateY(-8px); opacity: 0; pointer-events: none; visibility: hidden;
   }
-  .nav__links[data-open="true"] { transform: none; opacity: 1; pointer-events: auto; visibility: visible; }
+  .nav__links[data-menu-open="true"] { transform: none; opacity: 1; pointer-events: auto; visibility: visible; }
   .nav__links a { padding: var(--sp-4) 0; border-bottom: 1px solid var(--hairline); font-size: 1rem; }
 }
 
@@ -189,13 +189,16 @@ p { color: var(--muted); max-width: var(--measure); }
 #main { padding-top: var(--nav-h); }
 
 /* ---------- 7. Motion: sistema de reveal ---------- */
+/* `[data-reveal]` usa la propiedad `translate`, no `transform`, para la entrada:
+   `transform` queda libre para que `.card` (tilt 3D) y `.word > span` compongan
+   su propio movimiento sin que la regla de reveal los pise por especificidad. */
 @media (prefers-reduced-motion: no-preference) {
-  [data-reveal] {
+  [data-js="true"] [data-reveal] {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity .6s var(--ease), transform .6s var(--ease);
+    translate: 0 16px;
+    transition: opacity .6s var(--ease), translate .6s var(--ease);
   }
-  [data-reveal][data-revealed="true"] { opacity: 1; transform: none; }
+  [data-reveal][data-revealed="true"] { opacity: 1; translate: none; }
 
   .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
   .word > span {
@@ -206,7 +209,8 @@ p { color: var(--muted); max-width: var(--measure); }
   }
   [data-revealed="true"] .word > span { transform: none; }
 }
-/* Con reduce, nada se oculta: [data-reveal] no recibe estilos y todo es visible. */
+/* Con reduce, nada se oculta: [data-reveal] no recibe estilos y todo es visible.
+   Sin `data-js="true"` (JS no llegó a ejecutar), tampoco: ver Fix 9. */
 
 /* ---------- 8. Hero ---------- */
 .hero { position: relative; overflow: hidden; padding-block: clamp(64px, 10vh, 120px) var(--sp-8); }
@@ -494,7 +498,7 @@ p { color: var(--muted); max-width: var(--measure); }
 .form__label { color: var(--faint); }
 .form__input {
   background: var(--surface); color: var(--text);
-  border: 1px solid var(--hairline); border-radius: var(--radius);
+  border: 1px solid rgba(244, 241, 234, .38); border-radius: var(--radius);
   padding: 13px 15px; font-size: var(--fs-small);
 }
 .form__input:hover { border-color: rgba(244, 241, 234, .26); }

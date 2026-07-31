@@ -59,6 +59,7 @@ aceptada desde la Task 1, no un descuido.
 | 7 | Actualizar el CV en PDF: 7 años y perfil AI Engineer | `cv/CVRodolfoBravo.pdf` |
 | 8 | Generar `images/og-image.png` de 1200×630 | `images/` |
 | 9 | Si usas dominio propio, actualizar las cinco URLs absolutas: `canonical`, `og:url`, `og:image`, `twitter:image` (comparte valor con `og:image`, hay que editar ambas) y `url` del JSON-LD | `index.html` |
+| 10 | Se removió `alumniOf` del JSON-LD porque el valor anterior (`"Ingeniería Electrónica"`) era un campo de estudio, no una institución, y publicarlo así habría sido un dato estructurado incorrecto. Si quieres declarar tu universidad real, agrega de nuevo la propiedad con `{"@type": "EducationalOrganization", "name": "<Nombre real de la universidad>"}` | `index.html`, bloque `application/ld+json` |
 
 Buscar todos los marcadores pendientes:
 

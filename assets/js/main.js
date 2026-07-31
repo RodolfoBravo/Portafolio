@@ -10,7 +10,7 @@
   var doc = win.document;
   var LS_KEY = 'rb.lang';
   var langSubscribers = [];
-  var state = { lang: 'es' };
+  var state = { lang: 'es', filter: 'all' };
 
   var reduceMotion = win.matchMedia
     ? win.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -54,12 +54,12 @@
       burger.addEventListener('click', function () {
         var open = burger.getAttribute('aria-expanded') === 'true';
         burger.setAttribute('aria-expanded', String(!open));
-        links.setAttribute('data-open', String(!open));
+        links.setAttribute('data-menu-open', String(!open));
       });
       links.addEventListener('click', function (e) {
         if (e.target.tagName !== 'A') return;
         burger.setAttribute('aria-expanded', 'false');
-        links.setAttribute('data-open', 'false');
+        links.setAttribute('data-menu-open', 'false');
       });
     }
 
@@ -92,10 +92,11 @@
       for (var j = 0; j < entries.length; j++) {
         var link = byId[entries[j].target.id];
         if (!link) continue;
-        if (entries[j].isIntersecting) {
-          for (var k = 0; k < navLinks.length; k++) navLinks[k].removeAttribute('aria-current');
-          link.setAttribute('aria-current', 'true');
-        }
+        // Se limpia SIEMPRE que una sección observada cambie de estado, no solo
+        // cuando entra: si no, salir de #work hacia arriba (hacia el hero, que
+        // no se observa) deja "Casos" marcado como actual para siempre.
+        for (var k = 0; k < navLinks.length; k++) navLinks[k].removeAttribute('aria-current');
+        if (entries[j].isIntersecting) link.setAttribute('aria-current', 'true');
       }
     }, { rootMargin: '-45% 0px -50% 0px' });
 
@@ -115,7 +116,14 @@
 
   function chip(text) { return '<span class="card__chip">' + text + '</span>'; }
 
-  function renderCards(lang) {
+  // `isRelanguage` distingue la primera carga (se observa para animar la
+  // entrada) de un repintado por cambio de idioma (se marca revelada de una
+  // vez: repetir la animación de entrada en cada toggle de idioma sería un
+  // parpadeo, el mismo problema que ya resuelve `langInitialized` para los
+  // titulares). El filtro activo (`state.filter`) se vuelve a aplicar en cada
+  // llamada para que un cambio de idioma nunca "olvide" el filtro que el
+  // usuario tenía puesto.
+  function renderCards(lang, isRelanguage) {
     var grid = doc.getElementById('workGrid');
     if (!grid || !win.CaseStudies) return;
     var data = win.CaseStudies;
@@ -146,10 +154,15 @@
     cardsById = {};
     var cards = grid.querySelectorAll('.card');
     for (var j = 0; j < cards.length; j++) {
-      cardsById[cards[j].getAttribute('data-id')] = cards[j];
-      if (reduceMotion) cards[j].setAttribute('data-revealed', 'true');
+      var card = cards[j];
+      cardsById[card.getAttribute('data-id')] = card;
+
+      var show = state.filter === 'all' || card.getAttribute('data-category') === state.filter;
+      if (!show) card.setAttribute('hidden', '');
+
+      if (reduceMotion || isRelanguage) card.setAttribute('data-revealed', 'true');
     }
-    if (!reduceMotion) observeReveal('#workGrid .card');
+    if (!reduceMotion && !isRelanguage) observeReveal('#workGrid .card');
     attachTilt();
   }
 
@@ -163,7 +176,7 @@
     bar.addEventListener('click', function (e) {
       var btn = e.target.closest('.work__filter');
       if (!btn) return;
-      var filter = btn.getAttribute('data-filter');
+      state.filter = btn.getAttribute('data-filter');
 
       var all = bar.querySelectorAll('.work__filter');
       for (var i = 0; i < all.length; i++) {
@@ -172,7 +185,7 @@
 
       var cards = grid.querySelectorAll('.card');
       for (var j = 0; j < cards.length; j++) {
-        var show = filter === 'all' || cards[j].getAttribute('data-category') === filter;
+        var show = state.filter === 'all' || cards[j].getAttribute('data-category') === state.filter;
         if (show) cards[j].removeAttribute('hidden');
         else cards[j].setAttribute('hidden', '');
       }
@@ -212,7 +225,19 @@
     });
   }
 
-  onLangChange(function (lang) { renderCards(lang); });
+  // El primer repintado de `#workGrid` (con `isRelanguage` falso, para que las
+  // cartas se observen y animen su entrada) y los repintados posteriores por
+  // cambio de idioma (con `isRelanguage` true) pasan por el mismo suscriptor.
+  // Debe registrarse ANTES de que `initLang()` dispare su primer `setLang`
+  // del arranque — ver el comentario sobre el orden de arranque más abajo.
+  var workInitialized = false;
+
+  function initWork() {
+    onLangChange(function (lang) {
+      renderCards(lang, workInitialized);
+      workInitialized = true;
+    });
+  }
 
   // ---------- Motor de reveal ----------
   var revealObserver = null;
@@ -341,6 +366,9 @@
 
   function runCounter(el) {
     var target = parseFloat(el.getAttribute('data-count-to'));
+    // Un `data-count-to` mal escrito no debe pintar el literal "NaN" en la
+    // barra de credibilidad: se deja el texto estático que ya trae el markup.
+    if (isNaN(target)) return;
     var suffix = el.getAttribute('data-count-suffix') || '';
     var pad = parseInt(el.getAttribute('data-count-pad') || '0', 10);
     var DURATION = 1400;
@@ -481,10 +509,16 @@
     modalBody = doc.getElementById('modalBody');
     if (!modalEl) return;
 
-    // El modal es hermano de <header>, <main> y <footer> en el HTML, nunca su
-    // descendiente, así que marcarlos `inert` no puede alcanzar ni desactivar el diálogo.
-    inertTargets = [doc.querySelector('header'), doc.querySelector('main'), doc.querySelector('footer')]
-      .filter(function (el) { return !!el; });
+    // El fondo son TODOS los hijos directos de <body> excepto el propio modal
+    // (hoy: skip-link, header, main y footer). Derivarlo del DOM en vez de
+    // enumerar `header`/`main`/`footer` a mano evita que un futuro hijo de
+    // <body> — como el skip-link, que ya era el caso y quedaba fuera de la
+    // valla porque nadie lo agregó a la lista — escape del `inert` sin que
+    // nadie lo note. El modal jamás puede quedar en `inertTargets`: es el
+    // propio elemento que se excluye del filtro.
+    inertTargets = Array.prototype.filter.call(doc.body.children, function (el) {
+      return el !== modalEl;
+    });
 
     doc.addEventListener('click', function (e) {
       var opener = e.target.closest('[data-open]');
@@ -562,21 +596,73 @@
     if (el) el.textContent = String(new Date().getFullYear());
   }
 
-  /* ---------- Arranque ---------- */
+  /* ---------- Arranque ----------
 
-  ready(function () {
-    initLang();
-    initNav();
-    initReveal();
-    initAurora();
-    initScramble();
-    initCounters();
-    initFilters();
-    initModal();
-    initMarquee();
-    initForm();
-    initYear();
-  });
+     El orden de esta lista es load-bearing, no incidental:
+
+     - `initWork()` va ANTES que `initLang()`. `initWork()` solo REGISTRA el
+       suscriptor que pinta `#workGrid`; es `initLang()` quien dispara el
+       primer `setLang()` del arranque, que es lo que realmente ejecuta ese
+       suscriptor y renderiza las cartas. Si el orden se invirtiera, esa
+       primera carga no dibujaría nada en `#workGrid` y solo se corregiría en
+       el siguiente cambio de idioma. Con el orden actual, las cartas se
+       renderizan exactamente una vez en el arranque.
+     - `initLang()` va ANTES que `initReveal()`. El mismo primer `setLang()`
+       también dispara el suscriptor que re-parte los titulares en palabras
+       (ver `langInitialized` más arriba); esa bandera absorbe la primera
+       invocación para que `initReveal()` sea quien parta y observe los
+       titulares por primera vez, en lugar de dejarlos ya "revelados" antes de
+       que exista la animación de entrada.
+     - `initModal()` va después de que `initWork()` ya haya podido poblar
+       `cardsById` al menos una vez. `closeCase()` resuelve la carta por id
+       contra `cardsById` (no contra un nodo capturado al abrir el modal) para
+       devolver el foco correctamente incluso si `#workGrid` se reconstruyó
+       por un cambio de idioma mientras el modal estaba abierto.
+
+     Los tres suscriptores de `onLangChange` quedan registrados, en este
+     orden, durante el arranque:
+       1. El de `initWork()`      → repinta `#workGrid` en el nuevo idioma.
+       2. El de los titulares     → vuelve a partir `[data-reveal-words]`.
+       3. El de `initModal()`     → si el modal está abierto, reconstruye su
+          contenido en el nuevo idioma.
+
+     Cada `init*` corre envuelto en `safe()`: si uno lanza (por ejemplo, si
+     `i18n.js` no cargó y `win.I18n` no existe), el error se registra en
+     consola y el resto de los `init*` igual arrancan, en vez de dejar la
+     página casi en blanco — ver Fix 9 en el reporte. */
+
+  // Guarda de arranque: `require('./main.js')` en Node (o cualquier entorno
+  // sin `document`) no debe lanzar. Sin esta guarda, `ready()` intenta leer
+  // `doc.readyState` con `doc` en `undefined` y revienta el `require` — que
+  // es exactamente lo que dejaba este archivo, el que produjo los bugs de
+  // orden de Fix 3/4, sin ninguna cobertura de test.
+  if (win.document) {
+    ready(function () {
+      // Primer statement: si el JS llega a ejecutarse, el CSS puede ocultar
+      // `[data-reveal]` de entrada con confianza de que algo lo va a revelar.
+      // Sin este atributo (JS roto o bloqueado), `[data-reveal]` nunca recibe
+      // `opacity: 0` y la página queda visible aunque degradada, en vez de
+      // casi en blanco.
+      doc.documentElement.setAttribute('data-js', 'true');
+
+      function safe(fn) {
+        try { fn(); } catch (e) { console.error(e); }
+      }
+
+      safe(initWork);
+      safe(initLang);
+      safe(initNav);
+      safe(initReveal);
+      safe(initAurora);
+      safe(initScramble);
+      safe(initCounters);
+      safe(initFilters);
+      safe(initModal);
+      safe(initMarquee);
+      safe(initForm);
+      safe(initYear);
+    });
+  }
 
   /* ---------- API pública ---------- */
 
