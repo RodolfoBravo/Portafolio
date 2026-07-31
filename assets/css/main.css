@@ -377,6 +377,39 @@ p { color: var(--muted); max-width: var(--measure); }
   .stack__list li { transition: color .2s var(--ease), border-color .2s var(--ease); }
 }
 
+/* ---------- 6. Production ---------- */
+.diagram {
+  margin: 0 0 var(--sp-9);
+  padding: clamp(var(--sp-5), 4vw, var(--sp-7));
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
+}
+.diagram__caption { color: var(--accent); margin-bottom: var(--sp-5); }
+.diagram__flow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+.diagram__node {
+  font-family: var(--font-mono); font-size: .75rem; letter-spacing: .04em;
+  padding: 10px 14px; border: 1px solid var(--hairline); border-radius: 4px;
+  color: var(--text); background: var(--bg);
+}
+.diagram__node--core { border-color: var(--accent); color: var(--accent); }
+.diagram__arrow { color: var(--accent); }
+
+.diagram__branches {
+  display: grid; gap: var(--sp-3); margin-top: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  padding-left: var(--sp-5); border-left: 1px solid var(--hairline);
+}
+.diagram__base {
+  display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6);
+  margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px dashed var(--hairline);
+}
+.diagram__base .mono { color: var(--muted); }
+
+.principles { display: grid; gap: var(--sp-6); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.principle { padding-top: var(--sp-4); border-top: 1px solid var(--hairline); }
+.principle__num { display: block; color: var(--accent); margin-bottom: var(--sp-3); }
+.principle__title { font-size: var(--fs-h3); margin-bottom: var(--sp-3); max-width: 20ch; }
+.principle p { font-size: var(--fs-small); }
+
 /* ---------- 6. Marquee ---------- */
 .marquee {
   margin-top: clamp(var(--sp-8), 9vh, var(--sp-9));

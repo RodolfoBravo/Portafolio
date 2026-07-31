@@ -221,7 +221,58 @@
         </div>
       </div>
     </section>
-    <section id="production" class="section"><!-- Task 9 --></section>
+    <section class="section production" id="production">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="kicker" data-i18n="production.kicker">Método</span>
+          <h2 data-reveal-words><span data-i18n="production.title">Cómo llevo IA a producción.</span></h2>
+          <p data-i18n="production.lede"></p>
+        </div>
+
+        <figure class="diagram" data-reveal>
+          <figcaption class="mono diagram__caption" data-i18n="production.diagramLabel">Arquitectura de referencia</figcaption>
+          <div class="diagram__flow">
+            <span class="diagram__node" data-i18n="production.nodeClient">Cliente</span>
+            <span class="diagram__arrow" aria-hidden="true">→</span>
+            <span class="diagram__node">API Gateway</span>
+            <span class="diagram__arrow" aria-hidden="true">→</span>
+            <span class="diagram__node diagram__node--core" data-i18n="production.nodeOrchestrator">Orquestador</span>
+          </div>
+          <div class="diagram__branches">
+            <span class="diagram__node">Retrieval · pgvector + rerank</span>
+            <span class="diagram__node" data-i18n="production.nodeTools">Herramientas · function calling</span>
+            <span class="diagram__node" data-i18n="production.nodeLlm">LLM + modelo de respaldo</span>
+          </div>
+          <div class="diagram__base">
+            <span class="mono">Evals</span><span class="mono" data-i18n="production.baseTraces">Trazas</span>
+            <span class="mono" data-i18n="production.baseCost">Costo por token</span><span class="mono" data-i18n="production.baseCache">Caché</span>
+          </div>
+        </figure>
+
+        <ol class="principles">
+          <li class="principle" data-reveal>
+            <span class="principle__num mono">01</span>
+            <h3 class="principle__title" data-i18n="production.p1t">Evaluar antes de desplegar</h3>
+            <p data-i18n="production.p1d"></p>
+          </li>
+          <li class="principle" data-reveal>
+            <span class="principle__num mono">02</span>
+            <h3 class="principle__title" data-i18n="production.p2t">El costo es un requisito</h3>
+            <p data-i18n="production.p2d"></p>
+          </li>
+          <li class="principle" data-reveal>
+            <span class="principle__num mono">03</span>
+            <h3 class="principle__title" data-i18n="production.p3t">Fallar bien</h3>
+            <p data-i18n="production.p3d"></p>
+          </li>
+          <li class="principle" data-reveal>
+            <span class="principle__num mono">04</span>
+            <h3 class="principle__title" data-i18n="production.p4t">Observar todo</h3>
+            <p data-i18n="production.p4d"></p>
+          </li>
+        </ol>
+      </div>
+    </section>
     <section id="experience" class="section"><!-- Task 10 --></section>
     <section id="about" class="section"><!-- Task 10 --></section>
     <section id="contact" class="section"><!-- Task 11 --></section>
