@@ -332,7 +332,7 @@
   function initScramble() {
     var el = doc.getElementById('roleScramble');
     if (!el) return;
-    var ROLES = ['AI Engineer', 'LLM Systems Engineer', 'AI Solutions Architect'];
+    var ROLES = ['Fullstack AI Engineer', 'LLM Systems Engineer', 'AI Solutions Architect'];
     var CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&/<>[]{}';
     var idx = 0;
 

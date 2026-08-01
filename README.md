@@ -1,4 +1,4 @@
-# Portafolio — Rodolfo Bravo · AI Engineer
+# Portafolio — Rodolfo Bravo · Fullstack AI Engineer
 
 Sitio estático sin dependencias ni build. HTML, CSS y JavaScript vanilla.
 
@@ -56,7 +56,7 @@ aceptada desde la Task 1, no un descuido.
 | 4 | Crear cuenta en Formspree y pegar el ID | `index.html`, atributo `action` del formulario |
 | 5 | Definir el email público (`[EMAIL_PUBLICO]`) | `index.html` |
 | 6 | Poner el usuario de LinkedIn (`[LINKEDIN_USER]`) | `index.html` (incluye el `sameAs` del JSON-LD) |
-| 7 | Actualizar el CV en PDF: 7 años y perfil AI Engineer | `cv/CVRodolfoBravo.pdf` |
+| 7 | Actualizar el CV en PDF: 7 años y perfil Fullstack AI Engineer | `cv/CVRodolfoBravo.pdf` |
 | 8 | Generar `images/og-image.png` de 1200×630 | `images/` |
 | 9 | Si usas dominio propio, actualizar las cinco URLs absolutas: `canonical`, `og:url`, `og:image`, `twitter:image` (comparte valor con `og:image`, hay que editar ambas) y `url` del JSON-LD | `index.html` |
 | 10 | Se removió `alumniOf` del JSON-LD porque el valor anterior (`"Ingeniería Electrónica"`) era un campo de estudio, no una institución, y publicarlo así habría sido un dato estructurado incorrecto. Si quieres declarar tu universidad real, agrega de nuevo la propiedad con `{"@type": "EducationalOrganization", "name": "<Nombre real de la universidad>"}` | `index.html`, bloque `application/ld+json` |
@@ -79,9 +79,9 @@ midió una métrica y no hay respuesta, la candidatura se cae ahí.
 `index.html` incluye Open Graph, Twitter Card y un bloque JSON-LD (`@type: Person`).
 El campo `knowsAbout` lista deliberadamente términos de AI Engineering junto con
 términos fullstack (Next.js, Angular, React, FastAPI, etc.), y `alternateName`
-incluye ambos roles. No es redundancia: el sitio se presenta como AI Engineer,
-pero quitar los términos fullstack sacaría al candidato de un conjunto mucho más
-grande de búsquedas de reclutadores. No "limpiar" esa lista.
+incluye ambos roles. No es redundancia: el sitio se presenta como Fullstack AI
+Engineer, y quitar los términos fullstack o los de AI sacaría al candidato de un
+conjunto mucho más grande de búsquedas de reclutadores. No "limpiar" esa lista.
 
 ## Verificación pendiente (requiere navegador)
 

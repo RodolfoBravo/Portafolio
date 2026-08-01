@@ -21,7 +21,7 @@
       'nav.about': 'Sobre mí',
       'nav.contact': 'Contacto',
 
-      'hero.kicker': 'AI Engineer · 7 años construyendo software · [XX] en sistemas de IA',
+      'hero.kicker': 'Fullstack AI Engineer · 7 años construyendo software · [XX] en sistemas de IA',
       'hero.roleLabel': 'Rol',
       'hero.available': 'Disponible para proyectos',
       'hero.h1a': 'Construyo IA que',
@@ -135,7 +135,7 @@
       'nav.about': 'About',
       'nav.contact': 'Contact',
 
-      'hero.kicker': 'AI Engineer · 7 years building software · [XX] in AI systems',
+      'hero.kicker': 'Fullstack AI Engineer · 7 years building software · [XX] in AI systems',
       'hero.roleLabel': 'Role',
       'hero.available': 'Available for work',
       'hero.h1a': 'I build AI that',
