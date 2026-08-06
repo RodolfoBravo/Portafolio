@@ -63,6 +63,16 @@
       });
     }
 
+    // Fondo del nav: transparente arriba, sólido en cuanto hay scroll
+    var nav = doc.getElementById('nav');
+    if (nav) {
+      var syncNavBg = function () {
+        nav.setAttribute('data-scrolled', String(win.scrollY > 8));
+      };
+      win.addEventListener('scroll', syncNavBg, { passive: true });
+      syncNavBg();
+    }
+
     // Barra de progreso de scroll
     var bar = doc.getElementById('navProgress');
     if (bar) {
@@ -328,6 +338,145 @@
     }, { passive: true });
   }
 
+  // ---------- Lightfall: lluvia de luz del hero ----------
+  // Rayos que caen en abanico desde el bloom superior de la aurora, al estilo
+  // "lightfall". Cada rayo lleva una pseudo-profundidad z que escala largo,
+  // velocidad, grosor y alfa a la vez: los lejanos son cortos, lentos y
+  // tenues, y eso es lo que da la sensación de volumen sin 3D real.
+  function initLightfall() {
+    var canvas = doc.getElementById('lightfall');
+    if (!canvas || reduceMotion || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    var W = 0, H = 0;
+    var drops = [];
+    var visible = true, rafId = 0, lastTs = 0;
+
+    // El acento azul domina; el violeta y el blanco frío dan la deriva
+    // púrpura del look de referencia sin salirse de la paleta del sitio.
+    // Mantener sincronizado con --accent-rgb en main.css.
+    var COLORS = [
+      { rgb: '74, 140, 255', weight: .55 },
+      { rgb: '146, 126, 255', weight: .30 },
+      { rgb: '214, 228, 255', weight: .15 }
+    ];
+
+    function pickColor() {
+      var r = Math.random(), acc = 0;
+      for (var i = 0; i < COLORS.length; i++) {
+        acc += COLORS[i].weight;
+        if (r <= acc) return COLORS[i].rgb;
+      }
+      return COLORS[0].rgb;
+    }
+
+    // `anywhere` reparte los rayos por todo el alto en el arranque y en cada
+    // resize; los respawns entran siempre por arriba para no aparecer de
+    // golpe en medio del hero.
+    function makeDrop(anywhere) {
+      var z = .35 + Math.random() * .65;
+      return {
+        x: Math.random() * W,
+        y: anywhere ? Math.random() * H : -(Math.random() * H * .4),
+        len: (70 + Math.random() * 150) * z,
+        speed: (150 + Math.random() * 270) * z,
+        width: .8 + z * 1.5,
+        alpha: (.16 + Math.random() * .38) * z,
+        rgb: pickColor()
+      };
+    }
+
+    // Inclinación en abanico: los rayos del centro caen rectos y los de los
+    // bordes se abren, como si la fuente de luz estuviera arriba y al centro.
+    function slopeAt(x) {
+      return W > 0 ? (x / W - .5) * .5 : 0;
+    }
+
+    function resize() {
+      var dpr = Math.min(win.devicePixelRatio || 1, 2);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Densidad proporcional al ancho, acotada: en móvil no vale la pena
+      // pagar 100 rayos y en un ultrawide 36 se ven vacíos.
+      var target = Math.max(36, Math.min(100, Math.round(W / 16)));
+      drops.length = 0;
+      for (var i = 0; i < target; i++) drops.push(makeDrop(true));
+    }
+
+    function frame(ts) {
+      rafId = 0;
+      // dt acotado: al volver de una pestaña en segundo plano el primer ts
+      // trae segundos acumulados y sin el tope todos los rayos saltarían
+      // fuera del canvas en un solo frame.
+      var dt = lastTs ? Math.min((ts - lastTs) / 1000, .05) : .016;
+      lastTs = ts;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.lineCap = 'round';
+
+      for (var i = 0; i < drops.length; i++) {
+        var d = drops[i];
+        var k = slopeAt(d.x);
+        d.y += d.speed * dt;
+        d.x += d.speed * k * dt;
+        if (d.y - d.len > H) drops[i] = d = makeDrop(false);
+
+        var x1 = d.x - k * d.len, y1 = d.y - d.len;
+        var g = ctx.createLinearGradient(x1, y1, d.x, d.y);
+        g.addColorStop(0, 'rgba(' + d.rgb + ', 0)');
+        g.addColorStop(1, 'rgba(' + d.rgb + ', ' + d.alpha.toFixed(3) + ')');
+        ctx.strokeStyle = g;
+        ctx.lineWidth = d.width;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+
+        // Cabeza brillante, blanca-azulada independientemente del color de
+        // la estela: es el punto de luz que se ve en el look de referencia.
+        ctx.fillStyle = 'rgba(235, 242, 255, ' + (d.alpha * .9).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.width * .9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (visible && !doc.hidden) rafId = win.requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (rafId || !visible || doc.hidden) return;
+      lastTs = 0;
+      rafId = win.requestAnimationFrame(frame);
+    }
+    function stop() {
+      if (!rafId) return;
+      win.cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    win.addEventListener('resize', resize);
+    doc.addEventListener('visibilitychange', function () {
+      if (doc.hidden) stop(); else start();
+    });
+
+    // El canvas solo anima mientras el hero está en pantalla: es puro
+    // decorado y no tiene por qué gastar frames cuando se lee #work.
+    if (win.IntersectionObserver) {
+      new win.IntersectionObserver(function (entries) {
+        visible = entries[entries.length - 1].isIntersecting;
+        if (visible) start(); else stop();
+      }).observe(canvas);
+    }
+
+    resize();
+    start();
+  }
+
   // ---------- Scramble del rol ----------
   function initScramble() {
     var el = doc.getElementById('roleScramble');
@@ -551,6 +700,30 @@
     track.innerHTML = track.innerHTML + track.innerHTML;
   }
 
+  // ---------- Toast ----------
+  var toastStack = null;
+
+  function showToast(message, kind) {
+    if (!toastStack) {
+      toastStack = doc.createElement('div');
+      toastStack.className = 'toast-stack';
+      doc.body.appendChild(toastStack);
+    }
+    var toast = doc.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('data-state', kind);
+    toast.setAttribute('role', 'status');
+    toast.textContent = message;
+    toastStack.appendChild(toast);
+
+    win.setTimeout(function () {
+      toast.setAttribute('data-leaving', 'true');
+      win.setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 4500);
+  }
+
   // ---------- Formulario ----------
   function initForm() {
     var form = doc.getElementById('contactForm');
@@ -562,29 +735,27 @@
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
 
-      if (form.getAttribute('action').indexOf('[FORMSPREE_ID]') !== -1) {
-        status.setAttribute('data-state', 'error');
-        status.textContent = win.I18n.t(state.lang, 'contact.error');
-        console.warn('Contact form action still contains [FORMSPREE_ID] placeholder - configure Formspree ID before publishing');
-        return;
-      }
-
       submit.disabled = true;
       status.removeAttribute('data-state');
       status.textContent = win.I18n.t(state.lang, 'contact.sending');
 
+      // FormSubmit usa el campo reservado _replyto (no aparece en el correo)
+      // para que "Responder" en Gmail conteste al remitente del formulario.
+      var data = new win.FormData(form);
+      data.append('_replyto', doc.getElementById('cEmail').value);
+
       win.fetch(form.getAttribute('action'), {
         method: 'POST',
-        body: new win.FormData(form),
+        body: data,
         headers: { Accept: 'application/json' }
       }).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
-        status.setAttribute('data-state', 'ok');
-        status.textContent = win.I18n.t(state.lang, 'contact.success');
+        status.textContent = '';
+        showToast(win.I18n.t(state.lang, 'contact.success'), 'ok');
       }).catch(function () {
-        status.setAttribute('data-state', 'error');
-        status.textContent = win.I18n.t(state.lang, 'contact.error');
+        status.textContent = '';
+        showToast(win.I18n.t(state.lang, 'contact.error'), 'error');
       }).then(function () {
         submit.disabled = false;
       });
@@ -654,6 +825,7 @@
       safe(initNav);
       safe(initReveal);
       safe(initAurora);
+      safe(initLightfall);
       safe(initScramble);
       safe(initCounters);
       safe(initFilters);

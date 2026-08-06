@@ -52,6 +52,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.simpleicons.org">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
   <link rel="stylesheet" href="assets/css/main.css">
@@ -93,6 +94,7 @@
   <main id="main">
     <section class="hero" id="hero">
       <div class="hero__aurora" aria-hidden="true"></div>
+      <canvas class="hero__lightfall" id="lightfall" aria-hidden="true"></canvas>
       <div class="container hero__inner">
         <div class="hero__main">
           <span class="kicker hero__kicker" data-reveal data-i18n="hero.kicker">Fullstack AI Engineer</span>
@@ -115,7 +117,7 @@
           <div class="hero__ctas" data-reveal>
             <a class="btn btn--primary" href="#work" data-i18n="hero.ctaWork">Ver casos</a>
             <a class="btn" href="cv/CVRodolfoBravo.pdf" download data-i18n="hero.ctaCv">Descargar CV</a>
-            <a class="btn" href="mailto:[EMAIL_PUBLICO]" data-i18n="hero.ctaMail">Escríbeme</a>
+            <a class="btn" href="mailto:rodolfobravogarcia@gmail.com" data-i18n="hero.ctaMail">Escríbeme</a>
           </div>
         </div>
 
@@ -132,27 +134,102 @@
       </div>
 
       <div class="container hero__rule" data-reveal>
-        <span class="mono">Next.js</span><span class="mono">Angular</span><span class="mono">Python</span>
-        <span class="mono">Claude API</span><span class="mono">AWS · GCP · Azure</span><span class="mono">Stripe</span>
+        <div class="techstrip" aria-hidden="true">
+          <div class="techstrip__track" id="marqueeTrack">
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/claude" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Claude API</span></span>
+            <span class="techstrip__item"><span class="mono">OpenAI API</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/nextdotjs/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Next.js</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/react" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">React</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/angular/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Angular</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/typescript" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">TypeScript</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/javascript" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">JavaScript</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/redux" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Redux</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/tailwindcss" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Tailwind CSS</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/bootstrap" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Bootstrap</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/sass" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Sass</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/html5" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">HTML5</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/css" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">CSS3</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/python" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Python</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/fastapi" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">FastAPI</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/django/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Django</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/flask" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Flask</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/nodedotjs" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Node.js</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/express/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Express</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/postgresql" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">PostgreSQL</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/mysql" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">MySQL</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/mongodb" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">MongoDB</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/redis" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Redis</span></span>
+            <span class="techstrip__item"><span class="mono">AWS</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/googlecloud" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Google Cloud</span></span>
+            <span class="techstrip__item"><span class="mono">Azure</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/firebase" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Firebase</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/digitalocean" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">DigitalOcean</span></span>
+            <span class="techstrip__item"><span class="mono">Heroku</span></span>
+            <span class="techstrip__item"><span class="mono">Oracle DB</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/docker" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Docker</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/githubactions" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">GitHub Actions</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/git" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Git</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/opentelemetry/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">OpenTelemetry</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/stripe" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Stripe</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/tensorflow" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">TensorFlow</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/arduino" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Arduino</span></span>
+          </div>
+        </div>
       </div>
     </section>
     <section class="section proof" id="proof" aria-label="Métricas" data-i18n-attr="aria-label:a11y.metrics">
-      <div class="container proof__grid">
-        <div class="proof__item" data-reveal>
-          <span class="proof__num" data-count-to="7" data-count-pad="2">07</span>
-          <span class="mono proof__label" data-i18n="proof.years">Años construyendo software</span>
+      <div class="container">
+        <span class="kicker proof__kicker" data-reveal data-i18n="proof.kicker">Evidencia en producción</span>
+        <div class="proof__grid">
+          <div class="proof__item" data-reveal>
+            <span class="proof__num" data-count-to="7" data-count-pad="2">07</span>
+            <span class="proof__ruler" aria-hidden="true"></span>
+            <span class="mono proof__label" data-i18n="proof.years">Años construyendo software</span>
+          </div>
+          <div class="proof__item" data-reveal>
+            <span class="proof__num" data-count-to="6" data-count-pad="2">06</span>
+            <span class="proof__ruler" aria-hidden="true"></span>
+            <span class="mono proof__label" data-i18n="proof.systems">Sistemas con LLM en producción</span>
+          </div>
+          <div class="proof__item" data-reveal>
+            <span class="proof__num" data-count-to="3" data-count-pad="2">03</span>
+            <span class="proof__ruler" aria-hidden="true"></span>
+            <span class="mono proof__label" data-i18n="proof.clouds">Clouds en producción</span>
+          </div>
+          <div class="proof__item" data-reveal>
+            <span class="proof__num" data-count-to="40" data-count-suffix="k">40k</span>
+            <span class="proof__ruler" aria-hidden="true"></span>
+            <span class="mono proof__label" data-i18n="proof.users">Usuarios impactados</span>
+          </div>
         </div>
-        <div class="proof__item" data-reveal>
-          <span class="proof__num">[XX]</span>
-          <span class="mono proof__label" data-i18n="proof.systems">Sistemas con LLM en producción</span>
-        </div>
-        <div class="proof__item" data-reveal>
-          <span class="proof__num" data-count-to="3" data-count-pad="2">03</span>
-          <span class="mono proof__label" data-i18n="proof.clouds">Clouds en producción</span>
-        </div>
-        <div class="proof__item" data-reveal>
-          <span class="proof__num">[XX]k</span>
-          <span class="mono proof__label" data-i18n="proof.users">Usuarios impactados</span>
+        <div class="proof__results" data-reveal>
+          <span class="mono proof__resultsLabel" data-i18n="proof.resultsLabel">Resultados medidos en casos de estudio</span>
+          <ul class="proof__deltas">
+            <li class="proof__delta">
+              <span class="proof__deltaVal">−75%</span>
+              <span class="mono proof__deltaLabel" data-i18n="proof.r1">Tiempo de respuesta en RAG</span>
+            </li>
+            <li class="proof__delta">
+              <span class="proof__deltaVal">96%</span>
+              <span class="mono proof__deltaLabel" data-i18n="proof.r2">Respuestas con cita verificable</span>
+            </li>
+            <li class="proof__delta">
+              <span class="proof__deltaVal">−45%</span>
+              <span class="mono proof__deltaLabel" data-i18n="proof.r3">Costo de IA por usuario</span>
+            </li>
+            <li class="proof__delta">
+              <span class="proof__deltaVal">92%</span>
+              <span class="mono proof__deltaLabel" data-i18n="proof.r4">Documentos procesados sin intervención</span>
+            </li>
+            <li class="proof__delta">
+              <span class="proof__deltaVal">−65%</span>
+              <span class="mono proof__deltaLabel" data-i18n="proof.r5">Incidentes en producción</span>
+            </li>
+            <li class="proof__delta">
+              <span class="proof__deltaVal">+40%</span>
+              <span class="mono proof__deltaLabel" data-i18n="proof.r6">Leads calificados</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -222,14 +299,15 @@
             <span class="mono stack__groupTitle" data-i18n="stack.groupFrontend">Frontend</span>
             <ul class="stack__list">
               <li>Next.js</li><li>Angular</li><li>React</li><li>TypeScript</li>
-              <li>JavaScript</li><li>SASS</li><li>HTML5 &amp; CSS3</li>
+              <li>JavaScript</li><li>Redux</li><li>Tailwind CSS</li><li>Bootstrap</li>
+              <li>SASS</li><li>HTML5 &amp; CSS3</li>
             </ul>
           </div>
           <div class="stack__group" data-reveal>
             <span class="mono stack__groupTitle" data-i18n="stack.groupBackend">Backend</span>
             <ul class="stack__list">
-              <li>Node.js</li><li>Python</li><li>FastAPI</li><li>Flask</li><li>Express</li>
-              <li>PostgreSQL</li><li>MySQL</li><li>MSSQL</li><li>Redis</li>
+              <li>Node.js</li><li>Python</li><li>FastAPI</li><li>Django</li><li>Flask</li><li>Express</li>
+              <li>PostgreSQL</li><li>MySQL</li><li>MSSQL</li><li>MongoDB</li><li>Oracle DB</li><li>Redis</li>
             </ul>
           </div>
           <div class="stack__group" data-reveal>
@@ -237,7 +315,8 @@
             <ul class="stack__list">
               <li>AWS Bedrock</li><li>Lambda</li><li>S3</li><li>DynamoDB</li>
               <li>GCP Cloud Run</li><li>Document AI</li><li>Azure Functions</li>
-              <li>Azure AI Foundry</li><li>Docker</li><li>GitHub Actions</li>
+              <li>Azure AI Foundry</li><li>Firebase</li><li>DigitalOcean</li>
+              <li>Heroku</li><li>Docker</li><li>GitHub Actions</li>
             </ul>
           </div>
           <div class="stack__group" data-reveal>
@@ -250,15 +329,6 @@
         </div>
       </div>
 
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track" id="marqueeTrack">
-          <span>Next.js</span><span>·</span><span>Angular</span><span>·</span><span>Claude API</span><span>·</span>
-          <span>RAG</span><span>·</span><span>pgvector</span><span>·</span><span>Python</span><span>·</span>
-          <span>TypeScript</span><span>·</span><span>AWS Bedrock</span><span>·</span><span>Google Cloud</span><span>·</span>
-          <span>Azure</span><span>·</span><span>Stripe</span><span>·</span><span>Docker</span><span>·</span>
-          <span>OpenTelemetry</span><span>·</span><span>WhatsApp Cloud API</span><span>·</span>
-        </div>
-      </div>
     </section>
     <section class="section production" id="production">
       <div class="container">
@@ -315,13 +385,30 @@
     <section class="section about" id="about">
       <div class="container about__grid">
         <div class="about__media" data-reveal>
-          <img src="uploads/avatar.png" width="500" height="500" loading="lazy"
-               alt="Retrato de Rodolfo Bravo" data-i18n-attr="alt:about.portraitAlt">
+          <div class="about__frame">
+            <img src="uploads/avatar.png" width="500" height="500" loading="lazy"
+                 alt="Retrato de Rodolfo Bravo" data-i18n-attr="alt:about.portraitAlt">
+          </div>
+          <p class="about__caption mono" data-i18n="about.caption">Rodolfo Bravo · Ingeniero Electrónico</p>
         </div>
         <div class="about__text" data-reveal>
           <span class="kicker" data-i18n="about.kicker">Sobre mí</span>
           <h2 data-reveal-words><span data-i18n="about.title">Ingeniero antes que programador.</span></h2>
           <p class="about__body" data-i18n="about.body"></p>
+          <dl class="about__facts">
+            <div class="about__fact">
+              <dt data-i18n="about.f1k">Trayectoria</dt>
+              <dd data-i18n="about.f1v">7 años construyendo software</dd>
+            </div>
+            <div class="about__fact">
+              <dt data-i18n="about.f2k">Enfoque</dt>
+              <dd data-i18n="about.f2v">Sistemas con LLMs en producción</dd>
+            </div>
+            <div class="about__fact">
+              <dt data-i18n="about.f3k">Método</dt>
+              <dd data-i18n="about.f3v">Diseñar dentro de restricciones</dd>
+            </div>
+          </dl>
           <a class="btn" href="cv/CVRodolfoBravo.pdf" download data-i18n="hero.ctaCv">Descargar CV</a>
         </div>
       </div>
@@ -336,7 +423,7 @@
           <div class="contact__direct">
             <span class="mono contact__directLabel" data-i18n="contact.orDirect">O directo, sin formulario:</span>
             <ul class="contact__links">
-              <li><a href="mailto:[EMAIL_PUBLICO]">[EMAIL_PUBLICO]</a></li>
+              <li><a href="mailto:rodolfobravogarcia@gmail.com">rodolfobravogarcia@gmail.com</a></li>
               <li><a href="https://www.linkedin.com/in/[LINKEDIN_USER]" target="_blank" rel="noopener">LinkedIn</a></li>
               <li><a href="https://github.com/RodolfoBravo" target="_blank" rel="noopener">GitHub</a></li>
               <li><a href="cv/CVRodolfoBravo.pdf" download data-i18n="hero.ctaCv">Descargar CV</a></li>
@@ -345,22 +432,26 @@
         </div>
 
         <form class="form" id="contactForm" data-reveal
-              action="https://formspree.io/f/[FORMSPREE_ID]" method="POST">
+              action="https://formsubmit.co/ajax/rodolfobravogarcia@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde el portafolio">
+          <input type="hidden" name="_template" value="basic">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form__row">
             <label class="mono form__label" for="cName" data-i18n="contact.name">Nombre</label>
-            <input class="form__input" id="cName" name="name" type="text" required autocomplete="name">
+            <input class="form__input" id="cName" name="Nombre" type="text" required autocomplete="name">
           </div>
           <div class="form__row">
             <label class="mono form__label" for="cEmail" data-i18n="contact.email">Correo</label>
-            <input class="form__input" id="cEmail" name="email" type="email" required autocomplete="email">
+            <input class="form__input" id="cEmail" name="Correo" type="email" required autocomplete="email">
           </div>
           <div class="form__row">
             <label class="mono form__label" for="cCompany" data-i18n="contact.company">Empresa (opcional)</label>
-            <input class="form__input" id="cCompany" name="company" type="text" autocomplete="organization">
+            <input class="form__input" id="cCompany" name="Empresa" type="text" autocomplete="organization">
           </div>
           <div class="form__row">
             <label class="mono form__label" for="cMessage" data-i18n="contact.message">Cuéntame del rol</label>
-            <textarea class="form__input form__textarea" id="cMessage" name="message" rows="5" required></textarea>
+            <textarea class="form__input form__textarea" id="cMessage" name="Mensaje" rows="5" required></textarea>
           </div>
 
           <button class="btn btn--primary form__submit" type="submit" id="formSubmit" data-i18n="contact.send">

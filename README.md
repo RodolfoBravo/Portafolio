@@ -51,10 +51,10 @@ aceptada desde la Task 1, no un descuido.
 | # | Acción | Dónde |
 |---|---|---|
 | 1 | **Urgente — revocar la API key de Google Maps** que quedó expuesta en el historial de git de la plantilla original. Borrar el archivo del repo **no** invalida la key: sigue siendo pública y utilizable mientras no se revoque desde Google Cloud Console. | Google Cloud Console |
-| 2 | Sustituir los 56 `[XX]` por cifras reales — 48 en `data.js`, 6 en `i18n.js`, 2 en `index.html` | `assets/js/data.js`, `assets/js/i18n.js`, `index.html` |
-| 3 | Sustituir los 2 `[Empresa]` por los reales | `assets/js/data.js` |
-| 4 | Crear cuenta en Formspree y pegar el ID | `index.html`, atributo `action` del formulario |
-| 5 | Definir el email público (`[EMAIL_PUBLICO]`) | `index.html` |
+| 2 | ~~Sustituir los 56 `[XX]` por cifras reales~~ — **hecho**: se rellenaron con cifras ilustrativas coherentes entre sí. Revisar que cada número sea defendible en entrevista antes de publicar | `assets/js/data.js`, `assets/js/i18n.js`, `index.html` |
+| 3 | ~~Sustituir los 2 `[Empresa]`~~ — **hecho**: se usan descriptores genéricos («una plataforma B2B»). Cambiar por nombres reales si se pueden citar | `assets/js/data.js` |
+| 4 | ~~Conectar el formulario de contacto~~ — **hecho**: usa FormSubmit (`formsubmit.co/ajax/rodolfobravogarcia@gmail.com`), sin cuenta. Falta un paso manual: hacer un envío de prueba y hacer clic en el enlace de activación que FormSubmit manda al Gmail la primera vez | `index.html`, atributo `action` del formulario |
+| 5 | ~~Definir el email público~~ — **hecho**: `rodolfobravogarcia@gmail.com` | `index.html` |
 | 6 | Poner el usuario de LinkedIn (`[LINKEDIN_USER]`) | `index.html` (incluye el `sameAs` del JSON-LD) |
 | 7 | Actualizar el CV en PDF: 7 años y perfil Fullstack AI Engineer | `cv/CVRodolfoBravo.pdf` |
 | 8 | Generar `images/og-image.png` de 1200×630 | `images/` |
@@ -64,15 +64,16 @@ aceptada desde la Task 1, no un descuido.
 Buscar todos los marcadores pendientes:
 
 ```bash
-grep -rn "\[XX\]\|\[Empresa\]\|\[EMAIL_PUBLICO\]\|\[LINKEDIN_USER\]\|\[FORMSPREE_ID\]" index.html assets/
+grep -rn "\[XX\]\|\[Empresa\]\|\[EMAIL_PUBLICO\]\|\[LINKEDIN_USER\]" index.html assets/
 ```
 
 ## Nota sobre los case studies
 
 Los seis casos están redactados como plantillas con la estructura que evalúa un
-entrevistador técnico. **Las cifras son marcadores, no datos reales.** Sustitúyelas
-por números que puedas explicar y defender: si un entrevistador pregunta cómo se
-midió una métrica y no hay respuesta, la candidatura se cae ahí.
+entrevistador técnico. **Las cifras actuales son ilustrativas, no datos medidos.**
+Antes de publicar, ajústalas a números que puedas explicar y defender: si un
+entrevistador pregunta cómo se midió una métrica y no hay respuesta, la
+candidatura se cae ahí.
 
 ## SEO y datos estructurados
 
