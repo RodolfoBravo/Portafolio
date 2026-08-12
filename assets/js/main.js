@@ -174,6 +174,7 @@
     }
     if (!reduceMotion && !isRelanguage) observeReveal('#workGrid .card');
     attachTilt();
+    syncCarousel();
   }
 
   function getCardById(id) { return cardsById[id] || null; }
@@ -199,7 +200,110 @@
         if (show) cards[j].removeAttribute('hidden');
         else cards[j].setAttribute('hidden', '');
       }
+
+      // Filtrar cambia cuántas cartas hay en la pista: se vuelve al inicio para
+      // no quedar en una página que ya no existe, y se recalculan los puntos.
+      grid.scrollLeft = 0;
+      syncCarousel();
     });
+  }
+
+  // ---------- Carrusel de casos ----------
+  // El carrusel no pagina por índice de carta sino por ancho visible de la
+  // pista: así el número de columnas lo decide el CSS (`--cols`, 4→1 según
+  // breakpoint) y el JS no tiene que conocerlo ni duplicar esos valores.
+  var syncCarousel = function () {};
+
+  function initCarousel() {
+    var grid = doc.getElementById('workGrid');
+    var controls = doc.getElementById('workControls');
+    var dotsEl = doc.getElementById('workDots');
+    if (!grid || !controls || !dotsEl) return;
+
+    var prev = controls.querySelector('[data-scroll="prev"]');
+    var next = controls.querySelector('[data-scroll="next"]');
+    var pages = 0;
+
+    // `scrollWidth` incluye el padding lateral y los redondeos subpíxel del
+    // flex: el margen de 2px evita una página fantasma cuando todo cabe justo.
+    function pageCount() {
+      if (!grid.clientWidth) return 1;
+      return Math.max(1, Math.ceil((grid.scrollWidth - 2) / grid.clientWidth));
+    }
+
+    // La última página casi nunca es una página completa (con 6 cartas y 4
+    // columnas, el scroll tope solo avanza 2 cartas). Sin el caso "estoy en el
+    // tope" la división daría 0 y la flecha de siguiente nunca se apagaría.
+    function currentPage() {
+      var max = grid.scrollWidth - grid.clientWidth;
+      if (!grid.clientWidth || max <= 2) return 0;
+      if (grid.scrollLeft >= max - 2) return pages - 1;
+      return Math.min(pages - 1, Math.round(grid.scrollLeft / grid.clientWidth));
+    }
+
+    function renderDots() {
+      var html = '';
+      var label = win.I18n ? win.I18n.t(state.lang, 'a11y.page') : 'Page';
+      for (var i = 0; i < pages; i++) {
+        html += '<li><button type="button" class="work__dot" data-page="' + i + '"'
+          + ' aria-label="' + label + ' ' + (i + 1) + '"></button></li>';
+      }
+      dotsEl.innerHTML = html;
+    }
+
+    function paint() {
+      var page = currentPage();
+      var dots = dotsEl.querySelectorAll('.work__dot');
+      for (var i = 0; i < dots.length; i++) {
+        if (i === page) dots[i].setAttribute('aria-current', 'true');
+        else dots[i].removeAttribute('aria-current');
+      }
+      if (prev) prev.disabled = page <= 0;
+      if (next) next.disabled = page >= pages - 1;
+    }
+
+    // Se repintan siempre los puntos (son 2-6 nodos): además de cubrir el
+    // cambio de número de páginas, así sus `aria-label` siguen al idioma,
+    // porque el repintado por i18n también pasa por aquí.
+    syncCarousel = function () {
+      pages = pageCount();
+      renderDots();
+      controls.hidden = pages < 2;
+      paint();
+    };
+
+    function scrollToPage(page) {
+      grid.scrollTo({
+        left: page * grid.clientWidth,
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+    }
+
+    controls.addEventListener('click', function (e) {
+      var arrow = e.target.closest('[data-scroll]');
+      if (arrow) {
+        scrollToPage(currentPage() + (arrow.getAttribute('data-scroll') === 'next' ? 1 : -1));
+        return;
+      }
+      var dot = e.target.closest('.work__dot');
+      if (dot) scrollToPage(Number(dot.getAttribute('data-page')));
+    });
+
+    var ticking = false;
+    grid.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      win.requestAnimationFrame(function () { paint(); ticking = false; });
+    }, { passive: true });
+
+    // Al cambiar de breakpoint cambia `--cols` y con ello el número de páginas.
+    var resizeTimer = null;
+    win.addEventListener('resize', function () {
+      if (resizeTimer) win.clearTimeout(resizeTimer);
+      resizeTimer = win.setTimeout(syncCarousel, 150);
+    });
+
+    syncCarousel();
   }
 
   function attachTilt() {
@@ -694,10 +798,61 @@
   }
 
   // ---------- Marquee ----------
+  var STACK_SPEED = 32; // px por segundo, igual para todas las filas del stack
+
   function initMarquee() {
+    if (reduceMotion) return;
+
     var track = doc.getElementById('marqueeTrack');
-    if (!track || reduceMotion) return;
-    track.innerHTML = track.innerHTML + track.innerHTML;
+    if (track) track.innerHTML = track.innerHTML + track.innerHTML;
+
+    initStackRows();
+    // Los anchos dependen de las fuentes: recalcular cuando terminan de cargar.
+    if (doc.fonts && doc.fonts.ready && doc.fonts.ready.then) {
+      doc.fonts.ready.then(initStackRows);
+    }
+    win.addEventListener('resize', debounce(initStackRows, 200));
+  }
+
+  /* Clona el set de chips de cada cinta las veces necesarias para cubrir el
+     viewport y publica --shift (un set + gap) y --dur para el keyframe. Es
+     idempotente: al recalcular reutiliza el primer set como referencia. */
+  function initStackRows() {
+    var tracks = doc.querySelectorAll('[data-marquee]');
+
+    for (var i = 0; i < tracks.length; i++) {
+      var trk = tracks[i];
+      var set = trk.firstElementChild;
+      if (!set) continue;
+
+      // data-ready primero: quita el flex-wrap de reserva para poder medir el
+      // ancho real del set en una sola línea.
+      trk.setAttribute('data-ready', '');
+
+      var gap = parseFloat(win.getComputedStyle(trk).columnGap) || 0;
+      var shift = set.getBoundingClientRect().width + gap;
+      if (shift <= gap) { trk.removeAttribute('data-ready'); continue; } // aún sin layout
+
+      var viewport = Math.max(doc.documentElement.clientWidth || 0, 1200);
+      var needed = Math.max(2, Math.ceil((viewport + shift) / shift));
+
+      for (var copies = trk.children.length; copies < needed; copies++) {
+        var clone = set.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true'); // el original ya lo narra
+        trk.appendChild(clone);
+      }
+
+      trk.style.setProperty('--shift', shift + 'px');
+      trk.style.setProperty('--dur', (shift / STACK_SPEED) + 's');
+    }
+  }
+
+  function debounce(fn, wait) {
+    var timer = null;
+    return function () {
+      if (timer) win.clearTimeout(timer);
+      timer = win.setTimeout(fn, wait);
+    };
   }
 
   // ---------- Toast ----------
@@ -784,6 +939,11 @@
        invocación para que `initReveal()` sea quien parta y observe los
        titulares por primera vez, en lugar de dejarlos ya "revelados" antes de
        que exista la animación de entrada.
+     - `initCarousel()` va después de `initLang()`: mide `scrollWidth` contra
+       `clientWidth` para saber cuántas páginas hay, y eso solo es real con las
+       cartas ya pintadas. Antes de que corra, el `syncCarousel()` que llama
+       `renderCards()` es un no-op; `initCarousel()` cierra con su propia
+       llamada, así que los controles quedan sincronizados igual.
      - `initModal()` va después de que `initWork()` ya haya podido poblar
        `cardsById` al menos una vez. `closeCase()` resuelve la carta por id
        contra `cardsById` (no contra un nodo capturado al abrir el modal) para
@@ -829,6 +989,7 @@
       safe(initScramble);
       safe(initCounters);
       safe(initFilters);
+      safe(initCarousel);
       safe(initModal);
       safe(initMarquee);
       safe(initForm);

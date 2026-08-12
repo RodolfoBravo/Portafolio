@@ -53,7 +53,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.simpleicons.org">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <!-- Iconify sirve los logos que Simple Icons ya retiró de su CDN (AWS, Azure,
+       Oracle, C#, MSSQL, OpenAI, Heroku); mismo set, tintados a --text. -->
+  <link rel="preconnect" href="https://api.iconify.design">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -137,7 +140,9 @@
         <div class="techstrip" aria-hidden="true">
           <div class="techstrip__track" id="marqueeTrack">
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/claude" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Claude API</span></span>
-            <span class="techstrip__item"><span class="mono">OpenAI API</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/openai.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">GPT · OpenAI API</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/googlegemini" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Gemini</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/githubcopilot/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">GitHub Copilot</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/nextdotjs/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Next.js</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/react" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">React</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/angular/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Angular</span></span>
@@ -155,17 +160,21 @@
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/flask" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Flask</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/nodedotjs" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Node.js</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/express/F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Express</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/dotnet" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">.NET 8</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/csharp.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">C#</span></span>
+            <span class="techstrip__item"><img src="https://cdn.simpleicons.org/springboot" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Java · Spring Boot</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/postgresql" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">PostgreSQL</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/mysql" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">MySQL</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/microsoftsqlserver.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">MSSQL</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/mongodb" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">MongoDB</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/redis" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Redis</span></span>
-            <span class="techstrip__item"><span class="mono">AWS</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/amazonwebservices.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">AWS</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/googlecloud" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Google Cloud</span></span>
-            <span class="techstrip__item"><span class="mono">Azure</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/microsoftazure.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Azure</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/firebase" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Firebase</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/digitalocean" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">DigitalOcean</span></span>
-            <span class="techstrip__item"><span class="mono">Heroku</span></span>
-            <span class="techstrip__item"><span class="mono">Oracle DB</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/heroku.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Heroku</span></span>
+            <span class="techstrip__item"><img src="https://api.iconify.design/simple-icons/oracle.svg?color=%23F4F1EA" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Oracle DB</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/docker" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Docker</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/githubactions" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">GitHub Actions</span></span>
             <span class="techstrip__item"><img src="https://cdn.simpleicons.org/git" alt="" width="15" height="15" loading="lazy" onerror="this.remove()"><span class="mono">Git</span></span>
@@ -251,7 +260,25 @@
           <button type="button" class="work__filter" data-filter="integrations" aria-pressed="false" data-i18n="work.filterIntegrations">Integraciones</button>
         </div>
 
-        <div class="work__grid" id="workGrid"></div>
+        <div class="work__carousel">
+          <div class="work__grid" id="workGrid" role="group" aria-label="Casos de estudio" data-i18n-attr="aria-label:a11y.carousel"></div>
+
+          <div class="work__controls" id="workControls" hidden>
+            <ol class="work__dots" id="workDots"></ol>
+            <div class="work__arrows">
+              <button type="button" class="work__arrow" data-scroll="prev" aria-label="Anterior" data-i18n-attr="aria-label:a11y.prev">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="work__arrow" data-scroll="next" aria-label="Siguiente" data-i18n-attr="aria-label:a11y.next">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section class="section stack" id="stack">
@@ -264,67 +291,198 @@
 
         <div class="stack__highlights">
           <article class="stack__hl" data-reveal>
-            <h3 class="stack__hlTitle" data-i18n="stack.hl1t">Next.js</h3>
+            <span class="stack__hlLogos" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/nextdotjs/F4F1EA" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/angular/F4F1EA" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/react" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+            </span>
+            <h3 class="stack__hlTitle" data-i18n="stack.hl1t">Next.js · Angular</h3>
             <p data-i18n="stack.hl1d"></p>
           </article>
           <article class="stack__hl" data-reveal>
-            <h3 class="stack__hlTitle" data-i18n="stack.hl2t">Claude API</h3>
+            <span class="stack__hlLogos" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/claude" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://api.iconify.design/simple-icons/openai.svg?color=%23F4F1EA" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/googlegemini" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+            </span>
+            <h3 class="stack__hlTitle" data-i18n="stack.hl2t">Claude · GPT · Gemini</h3>
             <p data-i18n="stack.hl2d"></p>
           </article>
           <article class="stack__hl" data-reveal>
-            <h3 class="stack__hlTitle" data-i18n="stack.hl3t">AWS · GCP · Azure</h3>
+            <span class="stack__hlLogos" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/nodedotjs" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/dotnet" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/springboot" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/python" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+            </span>
+            <h3 class="stack__hlTitle" data-i18n="stack.hl3t">Node · .NET · Spring · Python</h3>
             <p data-i18n="stack.hl3d"></p>
+          </article>
+          <article class="stack__hl" data-reveal>
+            <span class="stack__hlLogos" aria-hidden="true">
+              <img src="https://api.iconify.design/simple-icons/amazonwebservices.svg?color=%23F4F1EA" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://cdn.simpleicons.org/googlecloud" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+              <img src="https://api.iconify.design/simple-icons/microsoftazure.svg?color=%23F4F1EA" alt="" width="18" height="18" loading="lazy" decoding="async" onerror="this.remove()">
+            </span>
+            <h3 class="stack__hlTitle" data-i18n="stack.hl4t">AWS · GCP · Azure</h3>
+            <p data-i18n="stack.hl4d"></p>
           </article>
         </div>
 
-        <p class="stack__endToEnd" data-reveal data-i18n="stack.endToEnd"></p>
+      </div>
 
-        <div class="stack__groups">
-          <div class="stack__group" data-reveal>
-            <span class="mono stack__groupTitle" data-i18n="stack.groupAi">IA y LLMs</span>
-            <ul class="stack__list">
-              <li>Claude API</li><li>OpenAI API</li><li>RAG</li><li>Embeddings</li>
-              <li>pgvector</li><li data-i18n="stack.chipHybrid">Retrieval híbrido</li><li>Reranking</li>
-              <li>Function calling</li><li>Structured outputs</li><li data-i18n="stack.chipCache">Caché semántica</li>
-            </ul>
+      <!-- Fuera del .container a propósito: la banda sangra de borde a borde y
+           es su propio .container interior el que vuelve a alinear el texto con
+           el resto de la sección. Así no hace falta ningún truco de 100vw, que
+           con la barra de scroll de Windows provoca scroll horizontal. -->
+      <div class="e2e" data-reveal>
+        <div class="container e2e__inner">
+          <div class="e2e__head">
+            <span class="mono e2e__kicker" data-i18n="stack.endToEndKicker">Base fullstack</span>
+            <p class="e2e__claim" data-i18n="stack.endToEnd"></p>
           </div>
-          <div class="stack__group" data-reveal>
-            <span class="mono stack__groupTitle" data-i18n="stack.groupLlmops">LLMOps y evaluación</span>
-            <ul class="stack__list">
-              <li>Golden datasets</li><li>LLM-as-judge</li><li data-i18n="stack.chipEvalsCi">Evals en CI</li>
-              <li>OpenTelemetry</li><li data-i18n="stack.chipTraces">Trazas por request</li><li data-i18n="stack.chipTokenCost">Costo por token</li>
-            </ul>
+          <ol class="e2e__flow">
+            <li class="e2e__step"><span class="mono e2e__num">01</span><span class="e2e__label" data-i18n="stack.flowFront">Frontend</span></li>
+            <li class="e2e__step"><span class="mono e2e__num">02</span><span class="e2e__label" data-i18n="stack.flowApi">API</span></li>
+            <li class="e2e__step"><span class="mono e2e__num">03</span><span class="e2e__label" data-i18n="stack.flowData">Base de datos</span></li>
+            <li class="e2e__step"><span class="mono e2e__num">04</span><span class="e2e__label" data-i18n="stack.flowPay">Pagos</span></li>
+            <li class="e2e__step"><span class="mono e2e__num">05</span><span class="e2e__label" data-i18n="stack.flowShip">Despliegue</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="stackrows">
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupAi">IA y LLMs</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee>
+                <ul class="stackrow__set">
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/claude" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Claude API</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/openai.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">GPT · OpenAI API</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/googlegemini" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Gemini</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/githubcopilot/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">GitHub Copilot</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">RAG</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Embeddings</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/postgresql" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">pgvector</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label" data-i18n="stack.chipHybrid">Retrieval híbrido</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Reranking</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Function calling</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Structured outputs</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label" data-i18n="stack.chipCache">Caché semántica</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="stack__group" data-reveal>
-            <span class="mono stack__groupTitle" data-i18n="stack.groupFrontend">Frontend</span>
-            <ul class="stack__list">
-              <li>Next.js</li><li>Angular</li><li>React</li><li>TypeScript</li>
-              <li>JavaScript</li><li>Redux</li><li>Tailwind CSS</li><li>Bootstrap</li>
-              <li>SASS</li><li>HTML5 &amp; CSS3</li>
-            </ul>
+
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupLlmops">LLMOps y evaluación</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee data-dir="rtl">
+                <ul class="stackrow__set">
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Golden datasets</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">LLM-as-judge</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label" data-i18n="stack.chipEvalsCi">Evals en CI</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/opentelemetry/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">OpenTelemetry</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label" data-i18n="stack.chipTraces">Trazas por request</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label" data-i18n="stack.chipTokenCost">Costo por token</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="stack__group" data-reveal>
-            <span class="mono stack__groupTitle" data-i18n="stack.groupBackend">Backend</span>
-            <ul class="stack__list">
-              <li>Node.js</li><li>Python</li><li>FastAPI</li><li>Django</li><li>Flask</li><li>Express</li>
-              <li>PostgreSQL</li><li>MySQL</li><li>MSSQL</li><li>MongoDB</li><li>Oracle DB</li><li>Redis</li>
-            </ul>
+
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupFrontend">Frontend</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee>
+                <ul class="stackrow__set">
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/nextdotjs/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Next.js</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/angular/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Angular</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/react" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">React</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/typescript" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">TypeScript</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/javascript" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">JavaScript</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/redux" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Redux</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/tailwindcss" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Tailwind CSS</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/bootstrap" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Bootstrap</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/sass" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">SASS</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/html5" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">HTML5</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/css" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">CSS3</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="stack__group" data-reveal>
-            <span class="mono stack__groupTitle" data-i18n="stack.groupCloud">Cloud y DevOps</span>
-            <ul class="stack__list">
-              <li>AWS Bedrock</li><li>Lambda</li><li>S3</li><li>DynamoDB</li>
-              <li>GCP Cloud Run</li><li>Document AI</li><li>Azure Functions</li>
-              <li>Azure AI Foundry</li><li>Firebase</li><li>DigitalOcean</li>
-              <li>Heroku</li><li>Docker</li><li>GitHub Actions</li>
-            </ul>
+
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupBackend">Backend</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee data-dir="rtl">
+                <ul class="stackrow__set">
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/nodedotjs" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Node.js</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/express/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Express</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/dotnet" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">.NET 8</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/csharp.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">C#</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/springboot" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Java · Spring Boot</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/python" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Python</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/fastapi" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">FastAPI</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/django/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Django</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/flask/F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Flask</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="stack__group" data-reveal>
-            <span class="mono stack__groupTitle" data-i18n="stack.groupPayments">Pagos e integraciones</span>
-            <ul class="stack__list">
-              <li>Stripe</li><li>Metered billing</li><li>Webhooks</li>
-              <li>Meta Graph API</li><li>WhatsApp Cloud API</li>
-            </ul>
+
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupData">Bases de datos</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee>
+                <ul class="stackrow__set">
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/postgresql" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">PostgreSQL</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/mysql" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">MySQL</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/microsoftsqlserver.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">MSSQL</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/mongodb" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">MongoDB</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/oracle.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Oracle DB</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/redis" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Redis</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupCloud">Cloud y DevOps</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee data-dir="rtl">
+                <ul class="stackrow__set">
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/amazonwebservices.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">AWS Bedrock</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/awslambda.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Lambda</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/amazons3.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">S3</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/amazondynamodb.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">DynamoDB</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/googlecloud" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">GCP Cloud Run</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/googlecloud" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Document AI</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/microsoftazure.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Azure Functions</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/microsoftazure.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Azure AI Foundry</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/firebase" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Firebase</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/digitalocean" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">DigitalOcean</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://api.iconify.design/simple-icons/heroku.svg?color=%23F4F1EA" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Heroku</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/docker" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Docker</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/githubactions" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">GitHub Actions</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="stackrow" data-reveal>
+            <span class="mono stackrow__title" data-i18n="stack.groupPayments">Pagos e integraciones</span>
+            <div class="stackrow__strip">
+              <div class="stackrow__track" data-marquee>
+                <ul class="stackrow__set">
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/stripe" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Stripe</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Metered billing</span></li>
+                  <li class="chip"><span class="chip__dot" aria-hidden="true"></span><span class="chip__label">Webhooks</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/meta" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">Meta Graph API</span></li>
+                  <li class="chip"><img class="chip__logo" src="https://cdn.simpleicons.org/whatsapp" alt="" width="16" height="16" loading="lazy" decoding="async" onerror="this.remove()"><span class="chip__label">WhatsApp Cloud API</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -338,48 +496,199 @@
           <p data-i18n="production.lede"></p>
         </div>
 
+        <!-- Esquema de señal, no diagrama de cajas: las trazas de 1px pasan por
+             DEBAJO de los nodos (que son opacos), así el pulso de la petición
+             "entra" a un nodo y sale por el otro lado. Dos SVG porque un solo
+             viewBox se vuelve ilegible en móvil; el ancho define los <defs> que
+             el alto reutiliza (los IDs son de documento). -->
         <figure class="diagram" data-reveal>
-          <figcaption class="mono diagram__caption" data-i18n="production.diagramLabel">Arquitectura de referencia</figcaption>
-          <div class="diagram__flow">
-            <span class="diagram__node" data-i18n="production.nodeClient">Cliente</span>
-            <span class="diagram__arrow" aria-hidden="true">→</span>
-            <span class="diagram__node">API Gateway</span>
-            <span class="diagram__arrow" aria-hidden="true">→</span>
-            <span class="diagram__node diagram__node--core" data-i18n="production.nodeOrchestrator">Orquestador</span>
-          </div>
-          <div class="diagram__branches">
-            <span class="diagram__node">Retrieval · pgvector + rerank</span>
-            <span class="diagram__node" data-i18n="production.nodeTools">Herramientas · function calling</span>
-            <span class="diagram__node" data-i18n="production.nodeLlm">LLM + modelo de respaldo</span>
-          </div>
-          <div class="diagram__base">
-            <span class="mono">Evals</span><span class="mono" data-i18n="production.baseTraces">Trazas</span>
-            <span class="mono" data-i18n="production.baseCost">Costo por token</span><span class="mono" data-i18n="production.baseCache">Caché</span>
-          </div>
+          <figcaption class="diagram__head">
+            <span class="mono diagram__caption" data-i18n="production.diagramLabel">Arquitectura de referencia</span>
+            <span class="mono diagram__live">
+              <span class="diagram__live-dot" aria-hidden="true"></span>
+              <span data-i18n="production.livePulse">Petición en vivo</span>
+            </span>
+          </figcaption>
+
+          <svg class="diagram__svg diagram__svg--wide" viewBox="0 0 980 440" aria-hidden="true" focusable="false">
+            <defs>
+              <marker id="dgArrow" viewBox="0 0 9 9" refX="8.5" refY="4.5"
+                      markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+                <path class="dg-head" d="M0.5,0.5 L8.5,4.5 L0.5,8.5 Z"/>
+              </marker>
+            </defs>
+
+            <g class="dg-wire">
+              <path d="M160,120 H200" marker-end="url(#dgArrow)"/>
+              <path d="M355,120 H390" marker-end="url(#dgArrow)"/>
+              <path d="M490,92 V52 H100 V90" marker-end="url(#dgArrow)"/>
+              <path d="M490,148 V267" marker-end="url(#dgArrow)"/>
+              <path d="M165,225 H815"/>
+              <path d="M165,225 V267" marker-end="url(#dgArrow)"/>
+              <path d="M815,225 V267" marker-end="url(#dgArrow)"/>
+            </g>
+            <g class="dg-junction">
+              <circle cx="165" cy="225" r="3.5"/>
+              <circle cx="490" cy="225" r="3.5"/>
+              <circle cx="815" cy="225" r="3.5"/>
+            </g>
+
+            <g class="dg-pulse">
+              <path class="dg-pulse--req" pathLength="1" d="M100,120 H490 V225 H815 V303"/>
+              <path class="dg-pulse--res" pathLength="1" d="M815,303 V225 H490 V52 H100 V120"/>
+            </g>
+
+            <rect class="dg-node" x="40" y="98" width="120" height="44" rx="3"/>
+            <rect class="dg-node" x="205" y="98" width="150" height="44" rx="3"/>
+            <rect class="dg-node dg-node--core" x="395" y="92" width="190" height="56" rx="3"/>
+            <rect class="dg-node" x="40" y="276" width="250" height="54" rx="3"/>
+            <rect class="dg-node" x="365" y="276" width="250" height="54" rx="3"/>
+            <rect class="dg-node" x="690" y="276" width="250" height="54" rx="3"/>
+
+            <g class="dg-labels">
+              <text x="100" y="125" data-i18n="production.nodeClient">Cliente</text>
+              <text x="280" y="125">API Gateway</text>
+              <text x="165" y="299">Retrieval</text>
+              <text x="490" y="299" data-i18n="production.nodeTools">Herramientas</text>
+              <text x="815" y="299">LLM</text>
+            </g>
+            <text class="dg-label-core" x="490" y="126" data-i18n="production.nodeOrchestrator">Orquestador</text>
+
+            <g class="dg-subs">
+              <text x="165" y="317">pgvector + rerank</text>
+              <text x="490" y="317">function calling</text>
+              <text x="815" y="317" data-i18n="production.nodeLlmSub">+ modelo de respaldo</text>
+            </g>
+
+            <rect class="dg-knockout" x="246" y="42" width="98" height="20"/>
+            <text class="dg-return" x="295" y="56" data-i18n="production.nodeResponse">respuesta</text>
+
+            <g class="dg-rail">
+              <path class="dg-rail-stub" d="M165,330 V378"/>
+              <path class="dg-rail-stub" d="M490,330 V378"/>
+              <path class="dg-rail-stub" d="M815,330 V378"/>
+              <path class="dg-rail-line" d="M40,378 H940"/>
+              <rect class="dg-knockout" x="38" y="368" width="124" height="20"/>
+              <text class="dg-rail-label" x="42" y="382" data-i18n="production.railLabel">Observabilidad</text>
+              <g class="dg-taps">
+                <path d="M250,378 V390"/><text x="250" y="406">Evals</text>
+                <path d="M410,378 V390"/><text x="410" y="406" data-i18n="production.baseTraces">Trazas</text>
+                <path d="M570,378 V390"/><text x="570" y="406" data-i18n="production.baseCost">Costo por token</text>
+                <path d="M800,378 V390"/><text x="800" y="406" data-i18n="production.baseCache">Caché</text>
+              </g>
+            </g>
+          </svg>
+
+          <svg class="diagram__svg diagram__svg--tall" viewBox="0 0 440 660" aria-hidden="true" focusable="false">
+            <g class="dg-wire">
+              <path d="M195,68 V99" marker-end="url(#dgArrow)"/>
+              <path d="M195,152 V183" marker-end="url(#dgArrow)"/>
+              <path d="M345,220 H398 V44 H291" marker-end="url(#dgArrow)"/>
+              <path d="M195,248 V272 H40 V511"/>
+              <path d="M40,323 H69" marker-end="url(#dgArrow)"/>
+              <path d="M40,417 H69" marker-end="url(#dgArrow)"/>
+              <path d="M40,511 H69" marker-end="url(#dgArrow)"/>
+            </g>
+            <g class="dg-junction">
+              <circle cx="40" cy="323" r="3.5"/>
+              <circle cx="40" cy="417" r="3.5"/>
+            </g>
+
+            <g class="dg-pulse">
+              <path class="dg-pulse--req" pathLength="1" d="M195,46 V272 H40 V511 H224"/>
+              <path class="dg-pulse--res" pathLength="1" d="M224,511 H40 V220 H398 V44 H195"/>
+            </g>
+
+            <rect class="dg-node" x="105" y="24" width="180" height="44" rx="3"/>
+            <rect class="dg-node" x="105" y="108" width="180" height="44" rx="3"/>
+            <rect class="dg-node dg-node--core" x="45" y="192" width="300" height="56" rx="3"/>
+            <rect class="dg-node" x="78" y="296" width="292" height="54" rx="3"/>
+            <rect class="dg-node" x="78" y="390" width="292" height="54" rx="3"/>
+            <rect class="dg-node" x="78" y="484" width="292" height="54" rx="3"/>
+
+            <g class="dg-labels">
+              <text x="195" y="51" data-i18n="production.nodeClient">Cliente</text>
+              <text x="195" y="135">API Gateway</text>
+            </g>
+            <text class="dg-label-core" x="195" y="225" data-i18n="production.nodeOrchestrator">Orquestador</text>
+            <g class="dg-labels dg-labels--start">
+              <text x="96" y="319">Retrieval</text>
+              <text x="96" y="413" data-i18n="production.nodeTools">Herramientas</text>
+              <text x="96" y="507">LLM</text>
+            </g>
+            <g class="dg-subs dg-subs--start">
+              <text x="96" y="337">pgvector + rerank</text>
+              <text x="96" y="431">function calling</text>
+              <text x="96" y="525" data-i18n="production.nodeLlmSub">+ modelo de respaldo</text>
+            </g>
+
+            <text class="dg-return" x="414" y="140" transform="rotate(-90 414 140)"
+                  data-i18n="production.nodeResponse">respuesta</text>
+
+            <g class="dg-rail">
+              <path class="dg-rail-stub" d="M224,538 V586"/>
+              <path class="dg-rail-line" d="M20,586 H420"/>
+              <!-- Aquí la etiqueta va SOBRE el riel, no calada dentro: a este
+                   ancho ocuparía el sitio de la primera derivación. -->
+              <text class="dg-rail-label" x="20" y="572" data-i18n="production.railLabel">Observabilidad</text>
+              <!-- Derivaciones escalonadas: a este ancho las cuatro no caben en
+                   una fila, y alternar la altura del pin es cómo lo resuelve un
+                   esquemático de verdad. -->
+              <g class="dg-taps">
+                <path d="M24,586 V598"/><text x="24" y="616">Evals</text>
+                <path d="M120,586 V622"/><text x="120" y="640" data-i18n="production.baseTraces">Trazas</text>
+                <path d="M205,586 V598"/><text x="205" y="616" data-i18n="production.baseCost">Costo por token</text>
+                <path d="M372,586 V622"/><text x="372" y="640" data-i18n="production.baseCache">Caché</text>
+              </g>
+            </g>
+          </svg>
+
+          <p class="sr-only" data-i18n="production.diagramAlt"></p>
         </figure>
 
-        <ol class="principles">
+        <!-- Los cuatro principios no son una secuencia (no se ejecutan en orden),
+             así que en vez de 01-04 cada uno lleva un glifo que dibuja su idea,
+             en el mismo trazo de 1px del esquema de arriba. -->
+        <ul class="principles">
           <li class="principle" data-reveal>
-            <span class="principle__num mono" aria-hidden="true">01</span>
+            <svg class="principle__glyph" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+              <path class="pg-dim" d="M2,27 H32"/>
+              <path class="pg-dim pg-dash" d="M2,14 H32"/>
+              <path d="M7,27 V19 M14,27 V9 M21,27 V21 M28,27 V6"/>
+            </svg>
             <h3 class="principle__title" data-i18n="production.p1t">Evaluar antes de desplegar</h3>
             <p data-i18n="production.p1d"></p>
           </li>
           <li class="principle" data-reveal>
-            <span class="principle__num mono" aria-hidden="true">02</span>
+            <svg class="principle__glyph" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+              <rect class="pg-dim" x="2" y="12" width="30" height="11" rx="1"/>
+              <rect class="pg-fill" x="2" y="12" width="18" height="11" rx="1"/>
+              <path d="M25,7 V28"/>
+            </svg>
             <h3 class="principle__title" data-i18n="production.p2t">El costo es un requisito</h3>
             <p data-i18n="production.p2d"></p>
           </li>
           <li class="principle" data-reveal>
-            <span class="principle__num mono" aria-hidden="true">03</span>
+            <svg class="principle__glyph" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+              <path class="pg-dim" d="M2,26 H12 M22,26 H32"/>
+              <path class="pg-dim" d="M15,21 L19,31"/>
+              <path class="pg-dash" d="M12,26 C12,7 22,7 22,26"/>
+            </svg>
             <h3 class="principle__title" data-i18n="production.p3t">Fallar bien</h3>
             <p data-i18n="production.p3d"></p>
           </li>
           <li class="principle" data-reveal>
-            <span class="principle__num mono" aria-hidden="true">04</span>
+            <svg class="principle__glyph" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+              <path class="pg-dim" d="M2,30 H32"/>
+              <path d="M2,25 H9 V15 H16 V21 H23 V7 H32"/>
+              <circle class="pg-dot" cx="9" cy="15" r="1.6"/>
+              <circle class="pg-dot" cx="16" cy="21" r="1.6"/>
+              <circle class="pg-dot" cx="23" cy="7" r="1.6"/>
+            </svg>
             <h3 class="principle__title" data-i18n="production.p4t">Observar todo</h3>
             <p data-i18n="production.p4d"></p>
           </li>
-        </ol>
+        </ul>
       </div>
     </section>
     <section class="section about" id="about">
@@ -469,7 +778,6 @@
       <p class="mono footer__legal">
         © <span id="footerYear">2026</span> Rodolfo Bravo. <span data-i18n="footer.rights">Todos los derechos reservados.</span>
       </p>
-      <p class="mono footer__built" data-i18n="footer.built"></p>
     </div>
   </footer>
 

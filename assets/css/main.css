@@ -23,12 +23,12 @@
   --accent-rgb: 74, 140, 255;
   --live: #4ADE80;
 
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Consolas, "SF Mono", monospace;
 
-  --fs-display: clamp(2.5rem, 1.2rem + 5.4vw, 5.75rem);
-  --fs-h2: clamp(1.9rem, 1.2rem + 2.4vw, 3.25rem);
+  --fs-display: clamp(2.35rem, 1.1rem + 5vw, 5.25rem);
+  --fs-h2: clamp(1.8rem, 1.15rem + 2.2vw, 3rem);
   --fs-h3: clamp(1.15rem, 1rem + .6vw, 1.5rem);
   --fs-body: clamp(.95rem, .9rem + .25vw, 1.0625rem);
   --fs-small: .875rem;
@@ -70,9 +70,15 @@ body {
   font-feature-settings: "cv11", "ss01";
 }
 
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -.022em; }
-h1 { font-size: var(--fs-display); line-height: .98; }
-h2 { font-size: var(--fs-h2); line-height: 1.04; }
+/* Newsreader es variable (opsz 6..72): con `font-optical-sizing: auto` el
+   titular grande adelgaza sus remates y el texto chico los engorda solo. Es
+   justo lo que le faltaba a Instrument Serif, que a 14px se veía anémica. */
+h1, h2, h3 {
+  font-family: var(--font-display); font-weight: 400; letter-spacing: -.018em;
+  font-optical-sizing: auto;
+}
+h1 { font-size: var(--fs-display); line-height: 1.02; }
+h2 { font-size: var(--fs-h2); line-height: 1.08; }
 h3 { font-size: var(--fs-h3); line-height: 1.2; }
 p { color: var(--muted); max-width: var(--measure); }
 
@@ -442,7 +448,58 @@ p { color: var(--muted); max-width: var(--measure); }
 .work__filter:hover { color: var(--text); border-color: var(--text); }
 .work__filter[aria-pressed="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
 
-.work__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+/* Carrusel de casos: la grilla pasa a ser una pista horizontal con scroll-snap.
+   Se ven `--cols` cartas por página y el resto queda a un scroll de distancia,
+   en vez de apilar fila tras fila. Degrada solo: sin JS sigue siendo un
+   contenedor con scroll nativo (táctil, rueda, teclado); main.js únicamente
+   añade flechas y puntos, que van en `hidden` hasta que él los habilite. */
+.work__carousel { position: relative; }
+
+.work__grid {
+  --cols: 4;
+  display: flex; gap: var(--sp-5);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* El tilt 3D asoma unos px arriba y abajo: sin este padding, `overflow-x`
+     (que vuelve `overflow-y` computado en auto) lo recortaría en el hover. */
+  padding-block: 6px;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.work__grid::-webkit-scrollbar { width: 0; height: 0; }
+
+.work__grid > .card {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--sp-5)) / var(--cols));
+  min-width: 0; scroll-snap-align: start;
+}
+
+@media (max-width: 1240px) { .work__grid { --cols: 3; } }
+@media (max-width: 960px)  { .work__grid { --cols: 2; } }
+@media (max-width: 680px)  { .work__grid { --cols: 1; } }
+
+.work__controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-4); margin-top: var(--sp-5);
+}
+.work__controls[hidden] { display: none; }
+
+.work__dots { display: flex; align-items: center; gap: var(--sp-2); }
+.work__dot { position: relative; width: 32px; height: 18px; }
+.work__dot::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 2px; translate: 0 -50%; background: rgba(244, 241, 234, .2);
+}
+.work__dot:hover::before { background: var(--text); }
+.work__dot[aria-current="true"]::before { background: var(--accent); }
+
+.work__arrows { display: flex; gap: var(--sp-2); }
+.work__arrow {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  border: 1px solid var(--hairline); border-radius: 999px; color: var(--faint);
+}
+.work__arrow:hover:not([disabled]) {
+  color: var(--accent-ink); background: var(--accent); border-color: var(--accent);
+}
+.work__arrow[disabled] { opacity: .28; cursor: default; }
 
 .card {
   position: relative; overflow: hidden;
@@ -482,7 +539,10 @@ p { color: var(--muted); max-width: var(--measure); }
   .card:hover .card__more span:last-child { transform: translateX(4px); }
   .card__more span:last-child { transition: transform .2s var(--ease); }
 
-  .work__grid { perspective: 1000px; }
+  .work__grid { perspective: 1000px; scroll-behavior: smooth; }
+  .work__arrow, .work__dot::before {
+    transition: color .2s var(--ease), background-color .2s var(--ease), border-color .2s var(--ease);
+  }
   .card {
     transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     transform-style: preserve-3d;
@@ -496,30 +556,124 @@ p { color: var(--muted); max-width: var(--measure); }
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 .stack__hl { padding-top: var(--sp-4); border-top: 2px solid var(--accent); }
+.stack__hlLogos { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); min-height: 18px; }
+.stack__hlLogos img { width: 18px; height: 18px; opacity: .85; }
 .stack__hlTitle { font-family: var(--font-mono); font-size: .875rem; letter-spacing: .04em; margin-bottom: var(--sp-3); }
 .stack__hl p { font-size: var(--fs-small); }
 
-.stack__endToEnd {
-  margin: var(--sp-7) 0 var(--sp-8);
-  padding: var(--sp-5) var(--sp-6);
-  background: var(--surface); border-left: 2px solid var(--accent);
-  color: var(--text); font-size: var(--fs-h3); line-height: 1.5; max-width: 78ch;
+/* Banda de cierre del stack. Antes era un párrafo con borde izquierdo que
+   enumeraba las etapas en prosa; ahora la frase queda en display y las etapas
+   se ven como el pipeline que son (01 → 05), que es el argumento real. */
+/* No es una tarjeta: es una franja que cruza la página de lado a lado, con
+   filete arriba y abajo. El ancho lo da estar fuera del .container (ver el
+   comentario en index.html) y el texto lo realinea el .container interior. */
+.e2e {
+  position: relative; overflow: hidden;
+  margin-block: var(--sp-7);
+  padding-block: clamp(var(--sp-5), 3vw, var(--sp-6));
+  border-block: 1px solid var(--hairline);
+  background:
+    radial-gradient(900px circle at 12% 0%, rgba(var(--accent-rgb), .13), transparent 62%),
+    linear-gradient(180deg, var(--raised), transparent 85%);
+}
+/* Cubre el filete superior con el degradado del acento, en vez de sumarle otra
+   línea: por eso el -1px arriba. */
+.e2e::before {
+  content: ""; position: absolute; inset: -1px 0 auto; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent) 12%, rgba(var(--accent-rgb), .08) 62%, transparent);
 }
 
-.stack__groups {
-  display: grid; gap: var(--sp-7);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+/* Una sola línea mientras quepa: la frase manda a la izquierda y el pipeline
+   la acompaña a la derecha. Al no caber, `flex-wrap` lo baja entero. */
+.e2e__inner {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: var(--sp-5) clamp(var(--sp-6), 4vw, var(--sp-8));
 }
-.stack__groupTitle { display: block; color: var(--accent); margin-bottom: var(--sp-4); }
-.stack__list { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.stack__list li {
-  font-size: var(--fs-small); color: var(--muted);
-  padding: 5px 10px; border: 1px solid var(--hairline); border-radius: 4px;
+.e2e__head { flex: 1 1 26ch; display: grid; gap: var(--sp-3); }
+.e2e__kicker { color: var(--accent); }
+.e2e__claim {
+  font-family: var(--font-display); font-optical-sizing: auto;
+  font-size: clamp(1.35rem, 1.05rem + 1.1vw, 2rem);
+  line-height: 1.18; letter-spacing: -.018em;
+  color: var(--text); max-width: 34ch; text-wrap: balance;
 }
-.stack__list li:hover { color: var(--text); border-color: var(--text); }
+
+.e2e__flow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-4); }
+.e2e__step {
+  position: relative;
+  display: inline-flex; align-items: center; gap: var(--sp-3);
+  padding: 10px 16px;
+  border: 1px solid var(--hairline); border-radius: 999px;
+  background: rgba(11, 11, 12, .55);
+  font-size: var(--fs-small); color: var(--text); white-space: nowrap;
+}
+.e2e__step:hover { border-color: rgba(var(--accent-rgb), .5); background: var(--raised); }
+.e2e__num { color: var(--accent); font-variant-numeric: tabular-nums; }
+/* El guion vive en el gap del flex, no dentro de la píldora. Se retira al
+   envolver en varias líneas, donde conectaría pasos que no van seguidos. */
+@media (min-width: 881px) {
+  .e2e__step + .e2e__step::before {
+    content: ""; position: absolute; top: 50%; left: calc(var(--sp-4) * -1);
+    width: var(--sp-4); height: 1px; background: var(--hairline);
+  }
+}
+
+/* Cintas por categoría: una fila por grupo, cada una desplazándose sola en
+   direcciones alternas (misma mecánica que .techstrip del hero). El ancho de
+   recorrido (--shift) y la duración (--dur) los calcula main.js según el
+   contenido real, para que todas las filas avancen a los mismos px/s. */
+.stackrows { display: grid; gap: var(--sp-2); }
+.stackrow {
+  display: grid; align-items: center;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: var(--sp-5);
+  padding-block: var(--sp-3);
+  border-top: 1px solid var(--hairline);
+}
+.stackrow:last-child { border-bottom: 1px solid var(--hairline); }
+.stackrow__title { color: var(--accent); }
+
+.stackrow__strip {
+  overflow: hidden; min-width: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.stackrow__track { --gap: var(--sp-2); display: flex; gap: var(--gap); }
+.stackrow__track[data-ready] { width: max-content; }
+.stackrow__set { display: flex; flex-wrap: wrap; gap: var(--gap); }
+.stackrow__track[data-ready] .stackrow__set { flex-wrap: nowrap; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: 7px 12px; white-space: nowrap;
+  font-size: .8125rem; color: var(--muted);
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: 4px;
+}
+.chip__logo { width: 16px; height: 16px; flex: none; opacity: .8; }
+.chip__dot {
+  width: 5px; height: 5px; flex: none; border-radius: 50%;
+  background: rgba(var(--accent-rgb), .55);
+}
+.chip:hover { color: var(--text); border-color: rgba(var(--accent-rgb), .5); background: var(--raised); }
+.chip:hover .chip__logo { opacity: 1; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .stack__list li { transition: color .2s var(--ease), border-color .2s var(--ease); }
+  .chip { transition: color .2s var(--ease), border-color .2s var(--ease), background-color .2s var(--ease); }
+  .chip__logo { transition: opacity .2s var(--ease); }
+  .e2e__step { transition: border-color .25s var(--ease), background-color .25s var(--ease); }
+  .stackrow__track[data-ready] { animation: stackmarquee var(--dur, 60s) linear infinite; }
+  .stackrow__track[data-dir="rtl"] { animation-direction: reverse; }
+  .stackrow__strip:hover .stackrow__track { animation-play-state: paused; }
+  @keyframes stackmarquee { to { transform: translate3d(calc(-1 * var(--shift, 0px)), 0, 0); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Sin animación (main.js tampoco clona las cintas): cada fila se muestra
+     completa como grilla envuelta. */
+  .stackrow__strip { -webkit-mask-image: none; mask-image: none; }
+}
+
+@media (max-width: 780px) {
+  .stackrow { grid-template-columns: 1fr; gap: var(--sp-3); }
 }
 
 /* ---------- 12. Production ---------- */
@@ -528,32 +682,165 @@ p { color: var(--muted); max-width: var(--measure); }
   padding: clamp(var(--sp-5), 4vw, var(--sp-7));
   background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
 }
-.diagram__caption { color: var(--accent); margin-bottom: var(--sp-5); }
-.diagram__flow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
-.diagram__node {
-  font-family: var(--font-mono); font-size: .75rem; letter-spacing: .04em;
-  padding: 10px 14px; border: 1px solid var(--hairline); border-radius: 4px;
-  color: var(--text); background: var(--bg);
+.diagram__head {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
 }
-.diagram__node--core { border-color: var(--accent); color: var(--accent); }
-.diagram__arrow { color: var(--accent); }
+.diagram__caption { color: var(--accent); }
+.diagram__live { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.diagram__live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--live); box-shadow: 0 0 8px var(--live);
+}
 
-.diagram__branches {
-  display: grid; gap: var(--sp-3); margin-top: var(--sp-4);
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  padding-left: var(--sp-5); border-left: 1px solid var(--hairline);
-}
-.diagram__base {
-  display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6);
-  margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px dashed var(--hairline);
-}
-.diagram__base .mono { color: var(--muted); }
+/* `overflow: visible` para que el drop-shadow del pulso y del nodo central no
+   se recorte contra el viewBox. */
+.diagram__svg { width: 100%; height: auto; overflow: visible; }
+.diagram__svg--tall { display: none; }
 
-.principles { display: grid; gap: var(--sp-6); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.principle { padding-top: var(--sp-4); border-top: 1px solid var(--hairline); }
-.principle__num { display: block; color: var(--accent); margin-bottom: var(--sp-3); }
-.principle__title { font-size: var(--fs-h3); margin-bottom: var(--sp-3); max-width: 20ch; }
+/* Trazas: 1px real a cualquier escala del viewBox. */
+.dg-wire path, .dg-rail-stub, .dg-rail-line, .dg-taps path {
+  fill: none; stroke-width: 1; vector-effect: non-scaling-stroke;
+}
+.dg-wire path { stroke: rgba(var(--accent-rgb), .5); }
+.dg-head { fill: rgba(var(--accent-rgb), .75); }
+.dg-junction circle { fill: var(--accent); }
+
+/* Los nodos van DESPUÉS de las trazas y con relleno opaco: el pulso desaparece
+   al entrar y reaparece al salir, como una señal atravesando una etapa. */
+.dg-node {
+  fill: var(--bg); stroke: rgba(244, 241, 234, .16);
+  stroke-width: 1; vector-effect: non-scaling-stroke;
+}
+.dg-node--core {
+  stroke: var(--accent);
+  filter: drop-shadow(0 0 14px rgba(var(--accent-rgb), .3));
+}
+
+.dg-labels text, .dg-label-core, .dg-subs text, .dg-return,
+.dg-rail-label, .dg-taps text {
+  font-family: var(--font-mono); text-anchor: middle;
+}
+.dg-labels text { font-size: 13px; fill: var(--text); letter-spacing: .02em; }
+.dg-label-core { font-size: 14px; fill: var(--accent); letter-spacing: .04em; }
+.dg-subs text { font-size: 11px; fill: var(--muted); }
+.dg-labels--start text, .dg-subs--start text { text-anchor: start; }
+.dg-return { font-size: 11px; fill: rgba(var(--accent-rgb), .85); letter-spacing: .08em; }
+.dg-knockout { fill: var(--surface); }
+
+/* Riel de observabilidad: bus común con derivaciones punteadas hacia cada
+   etapa; el trazo discontinuo lo separa de la ruta de la petición. */
+.dg-rail-line { stroke: rgba(244, 241, 234, .28); }
+.dg-rail-stub { stroke: rgba(244, 241, 234, .18); stroke-dasharray: 3 4; }
+.dg-taps path { stroke: rgba(244, 241, 234, .28); }
+.dg-rail-label {
+  font-size: 10px; fill: var(--faint); text-anchor: start;
+  letter-spacing: .14em; text-transform: uppercase;
+}
+.dg-taps text {
+  font-size: 11px; fill: var(--muted); text-anchor: start; letter-spacing: .06em;
+}
+
+/* El viewBox alto (440) se dibuja en ~300px, o sea a escala ~0.7: sin subir el
+   cuerpo, las etiquetas caerían a 7px reales. Estos tamaños están calculados
+   para llegar a ~12px en pantalla, no para verse bien en el viewBox. */
+.diagram__svg--tall .dg-labels text { font-size: 18px; }
+.diagram__svg--tall .dg-label-core { font-size: 19px; }
+.diagram__svg--tall .dg-subs text { font-size: 15px; }
+.diagram__svg--tall .dg-return { font-size: 14px; }
+.diagram__svg--tall .dg-rail-label { font-size: 14px; }
+.diagram__svg--tall .dg-taps text { font-size: 15px; }
+
+/* El pulso es un guion corto viajando por la traza. `pathLength="1"` normaliza
+   la longitud, así el mismo dasharray sirve para las dos rutas (ida y vuelta)
+   y para los dos SVG, que miden distinto. */
+.dg-pulse path {
+  fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: .045 2;
+  stroke-dashoffset: .045;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .diagram[data-revealed] .dg-pulse path {
+    opacity: 1;
+    animation: dgTrace 5.6s linear infinite;
+    filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), .85));
+  }
+  /* La respuesta arranca a mitad del ciclo: nunca coinciden en pantalla. */
+  .diagram[data-revealed] .dg-pulse--res { animation-delay: 2.8s; }
+}
+/* Sin animación el badge mentiría: no hay ninguna petición viajando. */
+@media (prefers-reduced-motion: reduce) {
+  .diagram__live { display: none; }
+}
+/* Pausa larga al final para que el ojo lea el esquema entre pulsos. */
+@keyframes dgTrace {
+  0%   { stroke-dashoffset: .045; }
+  45%  { stroke-dashoffset: -1; }
+  100% { stroke-dashoffset: -1; }
+}
+
+@media (max-width: 860px) {
+  .diagram__svg--wide { display: none; }
+  .diagram__svg--tall { display: block; }
+}
+
+/* Fila única tipo libro mayor: regla superior compartida y divisores
+   verticales entre principios. En pantallas angostas vuelve a apilarse
+   con la regla superior por tarjeta. */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--hairline);
+}
+.principle {
+  position: relative;
+  padding: var(--sp-5) var(--sp-5) 0 0;
+}
+.principle + .principle {
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--hairline);
+}
+.principle::before {
+  content: "";
+  position: absolute; top: -1px; left: 0; right: 0; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+}
+.principle:hover::before { transform: scaleX(1); }
+/* Glifos: mismo trazo de 1px que el esquema. Lo que dibuja cada uno —
+   evals contra un umbral, un presupuesto con tope, un desvío alrededor de un
+   fallo, una traza muestreada — es el principio, no un icono decorativo. */
+.principle__glyph {
+  display: block; width: 40px; height: 40px; margin-bottom: var(--sp-4);
+}
+.principle__glyph path, .principle__glyph rect {
+  fill: none; stroke: var(--accent); stroke-width: 1.25;
+  stroke-linecap: square; vector-effect: non-scaling-stroke;
+}
+.principle__glyph .pg-dim { stroke: rgba(244, 241, 234, .3); }
+.principle__glyph .pg-dash { stroke-dasharray: 3 3; }
+.principle__glyph .pg-fill { fill: rgba(var(--accent-rgb), .2); stroke: none; }
+.principle__glyph .pg-dot { fill: var(--accent); stroke: none; }
+
+.principle__title { font-size: var(--fs-h3); margin-bottom: var(--sp-3); text-wrap: balance; }
 .principle p { font-size: var(--fs-small); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .principle::before { transition: transform .5s var(--ease); }
+}
+
+@media (max-width: 880px) {
+  .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--sp-6); border-top: 0; }
+  .principle { padding: var(--sp-4) 0 var(--sp-6); border-top: 1px solid var(--hairline); }
+  .principle + .principle { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 560px) {
+  .principles { grid-template-columns: 1fr; }
+  .principle { padding-bottom: var(--sp-5); }
+}
 
 /* ---------- 13. (Marquee retirado: la cinta de tecnologías vive en el hero,
    sección 8, como .techstrip) ---------- */
@@ -678,8 +965,8 @@ p { color: var(--muted); max-width: var(--measure); }
 }
 
 /* ---------- 16. Footer ---------- */
-.footer { border-top: 1px solid var(--hairline); padding-block: var(--sp-7); }
-.footer__inner { display: flex; flex-wrap: wrap; gap: var(--sp-4) var(--sp-7); justify-content: space-between; }
+.footer { border-top: 1px solid var(--hairline); padding-block: var(--sp-5); }
+.footer__inner { display: flex; justify-content: center; text-align: center; }
 .footer .mono { color: var(--faint); }
 
 /* ---------- 17. Utilidades ---------- */
